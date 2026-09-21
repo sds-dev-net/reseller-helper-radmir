@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reseller Helper — Инструкция</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <style>
+    :root {
+      --bg:      #f4f6fb;
+      --surface: #ffffff;
+      --border:  #e3e7f0;
+      --accent:  #3b6ef8;
+      --accent-soft: #eef2ff;
+      --text:    #1a1d2e;
+      --muted:   #6b7280;
+      --step-bg: #3b6ef8;
+      --step-text: #ffffff;
+      --tag-bg:  #eef2ff;
+      --tag-text: #3b6ef8;
+      --link:    #3b6ef8;
+      --divider: #e3e7f0;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg:      #0d1117;
+        --surface: #161b27;
+        --border:  #222840;
+        --accent:  #5b8af9;
+        --accent-soft: #1a2340;
+        --text:    #e6eaf5;
+        --muted:   #8b92a8;
+        --step-bg: #5b8af9;
+        --step-text: #ffffff;
+        --tag-bg:  #1a2340;
+        --tag-text: #5b8af9;
+        --link:    #7aa0fb;
+        --divider: #222840;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg:      #0d1117;
+      --surface: #161b27;
+      --border:  #222840;
+      --accent:  #5b8af9;
+      --accent-soft: #1a2340;
+      --text:    #e6eaf5;
+      --muted:   #8b92a8;
+      --step-bg: #5b8af9;
+      --step-text: #ffffff;
+      --tag-bg:  #1a2340;
+      --tag-text: #5b8af9;
+      --link:    #7aa0fb;
+      --divider: #222840;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+      padding-inline: 16px;
+      padding-block: 48px;
+    }
+
+    .page {
+      max-width: 660px;
+      margin-inline: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .header h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text);
+    }
+    .header .sub {
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    /* Thank you banner */
+    .banner {
+      background: var(--accent-soft);
+      border: 1px solid var(--accent);
+      border-left: 4px solid var(--accent);
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 15px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Card */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 18px 22px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-header .icon {
+      font-size: 18px;
+      line-height: 1;
+    }
+    .card-header h2 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .card-body {
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Download link */
+    .download-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 16px;
+      text-decoration: none;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 500;
+      transition: border-color 0.15s;
+      word-break: break-all;
+    }
+    .download-link:hover { border-color: var(--accent); }
+    .download-link .dl-icon { font-size: 20px; flex-shrink: 0; }
+
+    /* Steps */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .step {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding-block: 10px;
+      position: relative;
+    }
+    .step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 17px;
+      top: 38px;
+      bottom: -2px;
+      width: 2px;
+      background: var(--divider);
+    }
+    .step-num {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--step-bg);
+      color: var(--step-text);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .step-content {
+      padding-top: 6px;
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.55;
+    }
+    .step-content code {
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 1px 6px;
+      border-radius: 5px;
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 13px;
+    }
+
+    /* TG links */
+    .tg-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .tg-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: border-color 0.15s;
+    }
+    .tg-link:hover { border-color: var(--accent); }
+    .tg-link .tg-icon { font-size: 22px; flex-shrink: 0; }
+    .tg-link .tg-info { display: flex; flex-direction: column; gap: 1px; }
+    .tg-link .tg-label { font-size: 11px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+    .tg-link .tg-name { font-size: 14px; color: var(--accent); font-weight: 500; }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      padding-top: 8px;
+    }
+    .footer strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="header-top">
+        <div class="logo">🛒</div>
+        <div>
+          <h1>Reseller Helper</h1>
+          <div class="sub">Плагин для Radmir RP</div>
+        </div>
+      </div>
+      <div><span class="badge">Инструкция по установке</span></div>
+    </div>
+
+    <!-- Thank you -->
+    <div class="banner">
+      🎉 Спасибо за покупку! Добро пожаловать в Reseller Helper.
+    </div>
+
+    <!-- Download -->
+    <div class="card">
+      <div class="card-header">
+        <span class="icon">📥</span>
+        <h2>Скачать плагин</h2>
+      </div>
+      <div class="card-body">
+        <a class="download-link"
+           href="https://drive.google.com/drive/folders/1YSoB1tUZCwM6XsDSWRnuG4-AX45DZQIi?usp=sharing"
+           target="_blank" rel="noopener">
+          <span class="dl-icon">📁</span>
+          Открыть папку на Google Drive
+        </a>
+      </div>
+    </div>
+
+    <!-- Install -->
+    <div class="card">
+      <div class="card-header">
+        <span class="icon">🔧</span>
+        <h2>Установка</h2>
+      </div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">Скачай файл <code>.asi</code> из папки выше</div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">Закинь его в папку с игрой — туда, где лежит <code>GTA_SA.exe</code></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">Запусти игру</div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">Нажми <code>INSERT</code> — откроется меню плагина</div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              Введи лицензионный ключ во вкладке «Ввести ключ»<br>
+              или введи в игровой чат: <code>/rh_activate [ключ]</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Telegram -->
+    <div class="card">
+      <div class="card-header">
+        <span class="icon">🤖</span>
+        <h2>Telegram</h2>
+      </div>
+      <div class="card-body">
+        <div class="tg-links">
+          <a class="tg-link" href="https://t.me/reseller_helper_radmir_bot" target="_blank" rel="noopener">
+            <span class="tg-icon">🤖</span>
+            <div class="tg-info">
+              <span class="tg-label">Бот для уведомлений</span>
+              <span class="tg-name">@reseller_helper_radmir_bot</span>
+            </div>
+          </a>
+          <a class="tg-link" href="https://t.me/reseller_helper_radmir" target="_blank" rel="noopener">
+            <span class="tg-icon">📢</span>
+            <div class="tg-info">
+              <span class="tg-label">Канал и поддержка</span>
+              <span class="tg-name">@reseller_helper_radmir</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bugs -->
+    <div class="card">
+      <div class="card-header">
+        <span class="icon">🐛</span>
+        <h2>Баги и идеи</h2>
+      </div>
+      <div class="card-body">
+        <p style="font-size:14px; color:var(--muted);">
+          Нашёл баг или есть идея? Пиши в поддержку канала —
+          разберём и обязательно учтём в следующем обновлении!
+        </p>
+        <a class="tg-link" href="https://t.me/reseller_helper_radmir" target="_blank" rel="noopener">
+          <span class="tg-icon">💬</span>
+          <div class="tg-info">
+            <span class="tg-label">Написать в поддержку</span>
+            <span class="tg-name">@reseller_helper_radmir</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <strong>Удачных продаж!</strong> 💰
+    </div>
+
+  </div>
+</body>
+</html>
