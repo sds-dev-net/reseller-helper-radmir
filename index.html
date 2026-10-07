@@ -3,368 +3,1240 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reseller Helper — Инструкция</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <title>Reseller Helper — установка и возможности</title>
+  <meta name="description" content="Reseller Helper — плагин для Radmir RP: SMS и звонки в Telegram, скупка кейсов, AI-анализ чата, автореклама, редактор TDO.">
+  <meta property="og:title" content="Reseller Helper — плагин для Radmir RP">
+  <meta property="og:description" content="SMS и звонки в Telegram, скупка кейсов, AI-анализ чата, автореклама по расписанию.">
+  <meta name="theme-color" content="#0d1117">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
   <style>
+    /* ───────── Тема ─────────
+       --accent      неон для заливок (плашки, кнопки, номера шагов) — текст на нём --on-accent
+       --accent-ink  акцент для текста и ссылок (в светлой теме — тёмно-зелёный, читается на белом) */
     :root {
-      --bg:      #f4f6fb;
-      --surface: #ffffff;
-      --border:  #e3e7f0;
-      --accent:  #3b6ef8;
-      --accent-soft: #eef2ff;
-      --text:    #1a1d2e;
-      --muted:   #6b7280;
-      --step-bg: #3b6ef8;
-      --step-text: #ffffff;
-      --tag-bg:  #eef2ff;
-      --tag-text: #3b6ef8;
-      --link:    #3b6ef8;
-      --divider: #e3e7f0;
+      --bg:          #f4f6f1;
+      --surface:     #ffffff;
+      --surface-2:   #f7f9f4;
+      --border:      #e1e6da;
+      --accent:      #8cf03a;
+      --accent-ink:  #3a7d10;
+      --on-accent:   #10200a;
+      --accent-soft: #eefbe2;
+      --accent-line: #b9e892;
+      --text:        #171b14;
+      --muted:       #646b5e;
+      --step-bg:     #8cf03a;
+      --step-text:   #10200a;
+      --tag-bg:      #eefbe2;
+      --tag-text:    #3a7d10;
+      --link:        #3a7d10;
+      --divider:     #e1e6da;
+      --free:        #4a6fd8;
+      --free-soft:   #ecf1ff;
+      --warn:        #a1590b;
+      --shadow:      0 1px 2px rgba(20,30,10,.04), 0 8px 24px -12px rgba(20,30,10,.18);
+      --shadow-hover:0 2px 4px rgba(20,30,10,.05), 0 16px 32px -14px rgba(40,90,10,.30);
+      color-scheme: light;
     }
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
-        --bg:      #0d1117;
-        --surface: #161b27;
-        --border:  #222840;
-        --accent:  #5b8af9;
-        --accent-soft: #1a2340;
-        --text:    #e6eaf5;
-        --muted:   #8b92a8;
-        --step-bg: #5b8af9;
-        --step-text: #ffffff;
-        --tag-bg:  #1a2340;
-        --tag-text: #5b8af9;
-        --link:    #7aa0fb;
-        --divider: #222840;
+        --bg:          #0d1117;
+        --surface:     #151a22;
+        --surface-2:   #11161d;
+        --border:      #232a35;
+        --accent:      #8cf03a;
+        --accent-ink:  #9df356;
+        --on-accent:   #0c1505;
+        --accent-soft: #17240f;
+        --accent-line: #3d6a1c;
+        --text:        #e8ecf2;
+        --muted:       #8d95a5;
+        --step-bg:     #8cf03a;
+        --step-text:   #0c1505;
+        --tag-bg:      #17240f;
+        --tag-text:    #9df356;
+        --link:        #9df356;
+        --divider:     #232a35;
+        --free:        #8eaaff;
+        --free-soft:   #172036;
+        --warn:        #f2b45a;
+        --shadow:      0 1px 2px rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.7);
+        --shadow-hover:0 2px 4px rgba(0,0,0,.3), 0 18px 36px -16px rgba(140,240,58,.22);
+        color-scheme: dark;
       }
     }
     :root[data-theme="dark"] {
-      --bg:      #0d1117;
-      --surface: #161b27;
-      --border:  #222840;
-      --accent:  #5b8af9;
-      --accent-soft: #1a2340;
-      --text:    #e6eaf5;
-      --muted:   #8b92a8;
-      --step-bg: #5b8af9;
-      --step-text: #ffffff;
-      --tag-bg:  #1a2340;
-      --tag-text: #5b8af9;
-      --link:    #7aa0fb;
-      --divider: #222840;
+      --bg:          #0d1117;
+      --surface:     #151a22;
+      --surface-2:   #11161d;
+      --border:      #232a35;
+      --accent:      #8cf03a;
+      --accent-ink:  #9df356;
+      --on-accent:   #0c1505;
+      --accent-soft: #17240f;
+      --accent-line: #3d6a1c;
+      --text:        #e8ecf2;
+      --muted:       #8d95a5;
+      --step-bg:     #8cf03a;
+      --step-text:   #0c1505;
+      --tag-bg:      #17240f;
+      --tag-text:    #9df356;
+      --link:        #9df356;
+      --divider:     #232a35;
+      --free:        #8eaaff;
+      --free-soft:   #172036;
+      --warn:        #f2b45a;
+      --shadow:      0 1px 2px rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.7);
+      --shadow-hover:0 2px 4px rgba(0,0,0,.3), 0 18px 36px -16px rgba(140,240,58,.22);
+      color-scheme: dark;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
     body {
       font-family: 'Inter', system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.65;
+      line-height: 1.6;
       font-size: 15px;
-      padding-inline: 16px;
-      padding-block: 48px;
+      padding: 40px 16px 64px;
+      overflow-x: hidden;
     }
-
-    .page {
-      max-width: 660px;
-      margin-inline: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-    }
-
-    /* Header */
-    .header {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .header-top {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .logo {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      background: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      flex-shrink: 0;
-    }
-    .header h1 {
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      color: var(--text);
-    }
-    .header .sub {
-      font-size: 14px;
-      color: var(--muted);
-    }
-    .badge {
-      display: inline-block;
-      padding: 3px 10px;
-      border-radius: 20px;
-      background: var(--tag-bg);
-      color: var(--tag-text);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-    }
-
-    /* Thank you banner */
-    .banner {
+    a { color: var(--link); }
+    code, kbd {
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 0.87em;
       background: var(--accent-soft);
-      border: 1px solid var(--accent);
-      border-left: 4px solid var(--accent);
-      border-radius: 10px;
-      padding: 14px 18px;
-      font-size: 15px;
-      color: var(--text);
-      font-weight: 500;
+      color: var(--accent-ink);
+      padding: 1px 6px;
+      border-radius: 5px;
+      white-space: nowrap;
     }
+    code.wrap-ok { white-space: normal; overflow-wrap: anywhere; }
+    kbd { border: 1px solid var(--accent-line); border-bottom-width: 2px; font-weight: 600; }
+    .ui { font-weight: 600; color: var(--text); }   /* название кнопки/пункта меню */
+    .wrap { max-width: 1000px; margin-inline: auto; }
 
-    /* Card */
-    .card {
+    /* ───────── Шапка ───────── */
+    .header { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; margin-bottom: 28px; }
+    .brand { display: flex; align-items: center; gap: 14px; text-align: left; }
+    .logo {
+      width: 52px; height: 52px; border-radius: 15px;
+      background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; flex-shrink: 0;
+      box-shadow: 0 6px 18px -6px rgba(140,240,58,.55);
+    }
+    .brand h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.6px; line-height: 1.2; }
+    .brand .sub { font-size: 14px; color: var(--muted); }
+
+    /* ───────── Вкладки ───────── */
+    .tabs {
+      position: relative;
+      display: inline-grid; grid-template-columns: 1fr 1fr;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 14px;
+      padding: 4px;
+      box-shadow: var(--shadow);
+      width: min(100%, 380px);
+    }
+    .tab-thumb {
+      position: absolute; top: 4px; bottom: 4px; left: 4px;
+      width: calc(50% - 4px);
+      background: var(--accent);
+      border-radius: 10px;
+      transition: transform .35s cubic-bezier(.3,.7,.2,1);
+    }
+    .tabs[data-active="features"] .tab-thumb { transform: translateX(100%); }
+    .tab {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 14px; font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .25s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .tab:hover { color: var(--text); }
+    .tab[aria-selected="true"] { color: var(--on-accent); }
+    .tab:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
+
+    /* ───────── Панели ───────── */
+    .panel[hidden] { display: none; }
+    .panel.enter { animation: panelIn .38s cubic-bezier(.2,.7,.2,1) both; }
+    @keyframes panelIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+    .col { max-width: 660px; margin-inline: auto; display: flex; flex-direction: column; gap: 24px; }
+
+    /* Баннер */
+    .banner {
+      background: var(--accent-soft);
+      border: 1px solid var(--accent-line);
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-weight: 500;
+    }
+
+    /* Карточка */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
       overflow: hidden;
+      box-shadow: var(--shadow);
+      scroll-margin-top: 20px;
     }
     .card-header {
       padding: 18px 22px 14px;
       border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      display: flex; align-items: center; gap: 10px;
     }
-    .card-header .icon {
-      font-size: 18px;
-      line-height: 1;
-    }
-    .card-header h2 {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-    }
-    .card-body {
-      padding: 20px 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
+    .card-header .icon { font-size: 18px; line-height: 1; }
+    .card-header h2 { font-size: 16px; font-weight: 700; }
+    .card-header .pill { margin-left: auto; }
+    .card-body { padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+    .note { font-size: 13px; color: var(--muted); }
+    .note.warn { color: var(--warn); }
 
-    /* Download link */
-    .download-link {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: var(--bg);
+    /* Ссылки-кнопки */
+    .link-row {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--surface-2);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 13px 16px;
+      border-radius: 12px;
+      padding: 12px 16px;
       text-decoration: none;
-      color: var(--accent);
-      font-size: 14px;
-      font-weight: 500;
-      transition: border-color 0.15s;
-      word-break: break-all;
+      color: var(--accent-ink);
+      font-size: 14px; font-weight: 600;
+      transition: border-color .2s, transform .2s;
     }
-    .download-link:hover { border-color: var(--accent); }
-    .download-link .dl-icon { font-size: 20px; flex-shrink: 0; }
+    .link-row:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .link-row .li-icon { font-size: 22px; flex-shrink: 0; }
+    .link-row .li-info { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+    .link-row .li-label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+    .link-row .li-name { overflow-wrap: anywhere; }
 
-    /* Steps */
-    .steps {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .step {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      padding-block: 10px;
-      position: relative;
-    }
+    /* Шаги */
+    .steps { display: flex; flex-direction: column; }
+    .step { display: flex; gap: 14px; align-items: flex-start; padding-block: 9px; position: relative; }
     .step:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      left: 17px;
-      top: 38px;
-      bottom: -2px;
-      width: 2px;
-      background: var(--divider);
+      content: ''; position: absolute; left: 16px; top: 42px; bottom: -4px;
+      width: 2px; background: var(--divider);
     }
     .step-num {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: var(--step-bg);
-      color: var(--step-text);
-      font-size: 13px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--step-bg); color: var(--step-text);
+      font-size: 13px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; position: relative; z-index: 1;
+    }
+    .step-content { padding-top: 6px; font-size: 14px; line-height: 1.6; min-width: 0; }
+    .step-content .note { margin-top: 4px; }
+    .ways { list-style: none; margin-top: 8px; display: flex; flex-direction: column; gap: 6px; counter-reset: way; }
+    .ways li {
+      counter-increment: way;
       position: relative;
-      z-index: 1;
-    }
-    .step-content {
-      padding-top: 6px;
-      font-size: 14px;
-      color: var(--text);
-      line-height: 1.55;
-    }
-    .step-content code {
-      background: var(--accent-soft);
-      color: var(--accent);
-      padding: 1px 6px;
-      border-radius: 5px;
-      font-family: 'Menlo', 'Consolas', monospace;
-      font-size: 13px;
-    }
-
-    /* TG links */
-    .tg-links {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .tg-link {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      border-radius: 10px;
-      background: var(--bg);
+      background: var(--surface-2);
       border: 1px solid var(--border);
-      text-decoration: none;
-      transition: border-color 0.15s;
+      border-radius: 10px;
+      padding: 8px 12px 8px 40px;
     }
-    .tg-link:hover { border-color: var(--accent); }
-    .tg-link .tg-icon { font-size: 22px; flex-shrink: 0; }
-    .tg-link .tg-info { display: flex; flex-direction: column; gap: 1px; }
-    .tg-link .tg-label { font-size: 11px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
-    .tg-link .tg-name { font-size: 14px; color: var(--accent); font-weight: 500; }
+    .ways li::before {
+      content: counter(way);
+      position: absolute; left: 11px; top: 9px;
+      width: 20px; height: 20px; border-radius: 6px;
+      background: var(--accent-soft); color: var(--accent-ink);
+      font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ways .best { font-size: 11px; font-weight: 700; color: var(--accent-ink); text-transform: uppercase; letter-spacing: .4px; margin-left: 6px; }
 
-    /* Footer */
-    .footer {
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-      padding-top: 8px;
+    /* FAQ */
+    .faq { display: flex; flex-direction: column; gap: 8px; }
+    .faq details {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: border-color .2s;
     }
-    .footer strong {
+    .faq details[open] { border-color: var(--accent-line); }
+    .faq summary {
+      list-style: none; cursor: pointer;
+      padding: 13px 44px 13px 16px;
+      font-weight: 600; font-size: 14.5px;
+      position: relative;
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after {
+      content: ''; position: absolute; right: 18px; top: 50%;
+      width: 8px; height: 8px;
+      border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted);
+      transform: translateY(-70%) rotate(45deg);
+      transition: transform .25s;
+    }
+    .faq details[open] summary::after { transform: translateY(-30%) rotate(-135deg); }
+    .faq summary:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; border-radius: 12px; }
+    .faq .answer { padding: 0 16px 14px; font-size: 14px; display: flex; flex-direction: column; gap: 8px; }
+    .faq .answer ol, .faq .answer ul { padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+
+    .footer { text-align: center; color: var(--muted); font-size: 13px; padding-top: 8px; }
+    .footer strong { color: var(--text); }
+
+    /* ───────── Возможности ───────── */
+    .features-layout {
+      display: grid;
+      grid-template-columns: 236px minmax(0, 1fr);
+      gap: 36px;
+      align-items: start;
+    }
+    .features-main { display: flex; flex-direction: column; gap: 22px; min-width: 0; max-width: 700px; }
+
+    /* Оглавление */
+    .toc {
+      position: sticky; top: 20px;
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+    .toc-list { position: relative; list-style: none; display: flex; flex-direction: column; gap: 2px; padding: 2px; }
+    .toc-ind-wrap { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+    .toc-group {
+      font-size: 11px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase;
+      color: var(--muted); padding: 14px 10px 6px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .toc-group:first-child { padding-top: 0; }
+    .toc-ind {
+      position: absolute; left: 0; top: 0;
+      width: 0; height: 0;
+      background: var(--accent-soft);
+      border-radius: 9px;
+      box-shadow: inset 3px 0 0 var(--accent);
+      transition: transform .35s cubic-bezier(.3,.7,.2,1), width .35s cubic-bezier(.3,.7,.2,1), height .35s cubic-bezier(.3,.7,.2,1), opacity .2s;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .toc a {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; gap: 9px;
+      padding: 7px 10px 7px 12px;
+      border-radius: 9px;
+      font-size: 13.5px; font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+      white-space: nowrap;
+    }
+    .toc a:hover { color: var(--text); }
+    .toc a.active { color: var(--text); font-weight: 600; }
+    .toc a:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: -2px; }
+    .toc .n {
+      font-size: 11px; font-weight: 700; color: var(--muted);
+      min-width: 16px; text-align: right; font-variant-numeric: tabular-nums;
+    }
+    .toc a.active .n { color: var(--accent-ink); }
+    .toc .t { overflow: hidden; text-overflow: ellipsis; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .dot.paid { background: var(--accent); }
+    .dot.free { background: var(--free); }
+
+    /* Плашки */
+    .pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 999px;
+      font-size: 12px; font-weight: 700; letter-spacing: .2px;
+      white-space: nowrap;
+    }
+    .pill.paid { background: var(--accent); color: var(--on-accent); }
+    .pill.free { background: var(--free-soft); color: var(--free); }
+
+    /* Заголовки блоков */
+    .block-head {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      padding-top: 10px;
+      scroll-margin-top: 20px;
+    }
+    .block-head h2 { font-size: 22px; font-weight: 800; letter-spacing: -.4px; }
+    .block-head p { flex-basis: 100%; color: var(--muted); font-size: 14px; }
+
+    /* Карточка функции */
+    .feat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 22px;
+      box-shadow: var(--shadow);
+      scroll-margin-top: 20px;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .feat:hover, .js .feat.in:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: var(--accent-line); }
+    .feat-top { display: flex; align-items: flex-start; gap: 14px; }
+    .feat-icon {
+      position: relative;
+      width: 46px; height: 46px; border-radius: 13px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; flex-shrink: 0;
+      background: var(--accent-soft);
+      transition: transform .3s cubic-bezier(.3,.7,.2,1.4);
+    }
+    .feat.is-free .feat-icon { background: var(--free-soft); }
+    .feat:hover .feat-icon { transform: rotate(-6deg) scale(1.06); }
+    .feat-num {
+      position: absolute; right: -6px; bottom: -6px;
+      min-width: 20px; height: 20px; padding: 0 5px; border-radius: 7px;
+      background: var(--surface); border: 1px solid var(--border);
+      font-size: 11px; font-weight: 800; color: var(--muted);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .feat-title { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding-top: 2px; min-width: 0; }
+    .feat-title h3 { font-size: 17.5px; font-weight: 700; letter-spacing: -.2px; line-height: 1.3; }
+    .feat-desc { margin-top: 6px; color: var(--text); font-size: 14.5px; }
+    .feat-body { margin-top: 14px; display: flex; flex-direction: column; gap: 12px; }
+    .howto h4, .where h4 {
+      font-size: 11px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 6px;
+    }
+    .howto ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .howto li { position: relative; padding-left: 20px; font-size: 14px; }
+    .howto li::before {
+      content: ''; position: absolute; left: 3px; top: .62em;
+      width: 7px; height: 7px; border-radius: 2px;
+      background: var(--accent); transform: rotate(45deg);
+    }
+    .feat.is-free .howto li::before { background: var(--free); }
+    .where {
+      display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap;
+      background: var(--surface-2);
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-size: 13.5px;
+    }
+    .where h4 { margin: 0; }
+
+    /* Места под скриншоты: показываются, только если картинка есть (или ?slots) */
+    .shot { display: none; margin-top: 14px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: var(--surface-2); }
+    .shot.ok { display: block; }
+    .shot img { display: block; width: 100%; height: auto; }
+    .show-slots .shot.missing {
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      aspect-ratio: 16 / 9;
+      border: 2px dashed var(--accent-line);
+      color: var(--muted); font-size: 13px; padding: 16px;
+    }
+    .show-slots .shot.missing img { display: none; }
+    .shot .slot-label { display: none; }
+    .show-slots .shot.missing .slot-label { display: block; }
+
+    /* Как открыть меню */
+    .intro {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 22px;
+      box-shadow: var(--shadow);
+      scroll-margin-top: 20px;
+    }
+    .intro h2 { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+    .open-ways { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .open-way {
+      background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px;
+      padding: 10px 12px; font-size: 13.5px; display: flex; flex-direction: column; gap: 6px;
+    }
+    .open-way .key { font-size: 15px; }
+    .intro .note { margin-top: 10px; }
+
+    /* Призыв */
+    .cta {
+      position: relative; overflow: hidden;
+      border-radius: 18px;
+      padding: 26px 24px;
+      background: #0f1509;
+      color: #eef6e6;
+      border: 1px solid #2c4419;
+      scroll-margin-top: 20px;
+    }
+    .cta::before {
+      content: ''; position: absolute; inset: -40% -10% auto auto;
+      width: 320px; height: 320px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(140,240,58,.35), rgba(140,240,58,0) 65%);
+      pointer-events: none;
+    }
+    .cta h2 { position: relative; font-size: 22px; font-weight: 800; letter-spacing: -.4px; }
+    .cta p { position: relative; margin-top: 8px; color: #b8c6ab; font-size: 14.5px; max-width: 520px; }
+    .cta p b { color: #eef6e6; }
+    .cta-actions { position: relative; display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 18px; border-radius: 12px;
+      font-weight: 700; font-size: 14px; text-decoration: none;
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+    .btn-neon { background: #8cf03a; color: #0c1505; box-shadow: 0 8px 22px -8px rgba(140,240,58,.6); }
+    .btn-neon:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -8px rgba(140,240,58,.75); }
+    .btn-ghost { color: #dfeed2; border: 1px solid #3a5524; }
+    .btn-ghost:hover { background: rgba(140,240,58,.08); transform: translateY(-2px); }
+    .btn[hidden] { display: none; }
+
+    /* Кнопка «наверх» */
+    .to-top {
+      position: fixed; right: 18px; bottom: 18px; z-index: 30;
+      width: 46px; height: 46px; border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface);
       color: var(--text);
-      font-weight: 600;
+      box-shadow: var(--shadow-hover);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      opacity: 0; transform: translateY(12px) scale(.9); pointer-events: none;
+      transition: opacity .25s, transform .25s, border-color .2s;
+    }
+    .to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+    .to-top:hover { border-color: var(--accent); }
+    .to-top svg { width: 18px; height: 18px; }
+
+    /* Появление при прокрутке (только с JS) */
+    .js .reveal { opacity: 0; transform: translateY(16px); }
+    .js .reveal.in {
+      opacity: 1; transform: none;
+      transition: opacity .55s ease var(--d, 0ms), transform .55s cubic-bezier(.2,.7,.2,1) var(--d, 0ms);
+    }
+    /* после появления hover-анимация работает без задержки */
+    .js .feat.reveal.in.settled { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+
+    /* ───────── Телефон / узкие экраны ───────── */
+    @media (max-width: 900px) {
+      body { padding-top: 28px; }
+      .features-layout { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+      .features-main { max-width: none; }
+      .toc {
+        top: 0; z-index: 20;
+        max-height: none;
+        overflow-x: auto; overflow-y: hidden;
+        margin-inline: -16px;
+        padding: 10px 16px;
+        background: var(--bg);
+        background: color-mix(in srgb, var(--bg) 88%, transparent);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+        scrollbar-width: none;
+      }
+      .toc::-webkit-scrollbar { display: none; }
+      .toc-list { flex-direction: row; gap: 6px; width: max-content; }
+      .toc-group { display: none; }
+      .toc a {
+        padding: 7px 12px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        border-radius: 999px;
+        font-size: 13px;
+      }
+      .toc a.active { border-color: transparent; background: transparent; }
+      .toc-ind { box-shadow: none; background: var(--accent); border-radius: 999px; }
+      .toc a.active, .toc a.active .n { color: var(--on-accent); }
+      .toc a.active .dot { background: var(--on-accent); }
+      .feat, .block-head, .intro, .cta { scroll-margin-top: 70px; }
+    }
+    @media (max-width: 560px) {
+      body { font-size: 14.5px; }
+      .brand h1 { font-size: 23px; }
+      .card-header, .card-body { padding-inline: 16px; }
+      .feat, .intro { padding: 16px; }
+      .feat-top { gap: 12px; }
+      .feat-icon { width: 42px; height: 42px; font-size: 20px; }
+      .feat-title h3 { font-size: 16.5px; }
+      /* описание — на всю ширину карточки, под иконкой и заголовком */
+      .feat-top { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 12px; }
+      .feat-top > div:not(.feat-icon) { display: contents; }
+      .feat-desc { grid-column: 1 / -1; margin-top: 12px; }
+      .open-ways { grid-template-columns: minmax(0, 1fr); }
+      .open-way { flex-direction: row; align-items: center; gap: 10px; }
+      .cta { padding: 22px 18px; }
+      .to-top { right: 12px; bottom: 12px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .js .reveal { opacity: 1; transform: none; }
+      .feat:hover, .js .feat.in:hover, .feat:hover .feat-icon, .link-row:hover, .btn:hover { transform: none; }
     }
   </style>
 </head>
 <body>
-  <div class="page">
+<div class="wrap">
 
-    <!-- Header -->
-    <div class="header">
-      <div class="header-top">
-        <div class="logo">🛒</div>
-        <div>
-          <h1>Reseller Helper</h1>
-          <div class="sub">Плагин для Radmir RP</div>
-        </div>
-      </div>
-      <div><span class="badge">Инструкция по установке</span></div>
-    </div>
-
-    <!-- Thank you -->
-    <div class="banner">
-      🎉 Спасибо за покупку! Добро пожаловать в Reseller Helper.
-    </div>
-
-    <!-- Download -->
-    <div class="card">
-      <div class="card-header">
-        <span class="icon">📥</span>
-        <h2>Скачать плагин</h2>
-      </div>
-      <div class="card-body">
-        <a class="download-link"
-           href="https://drive.google.com/drive/folders/1YSoB1tUZCwM6XsDSWRnuG4-AX45DZQIi?usp=sharing"
-           target="_blank" rel="noopener">
-          <span class="dl-icon">📁</span>
-          Открыть папку на Google Drive
-        </a>
+  <!-- Шапка -->
+  <header class="header">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">🛒</div>
+      <div>
+        <h1>Reseller Helper</h1>
+        <div class="sub">Плагин для Radmir RP</div>
       </div>
     </div>
+    <nav class="tabs" role="tablist" aria-label="Разделы" data-active="install">
+      <span class="tab-thumb" aria-hidden="true"></span>
+      <a class="tab" role="tab" id="tab-install" href="#install" aria-controls="panel-install" aria-selected="true">🔧 Установка</a>
+      <a class="tab" role="tab" id="tab-features" href="#features" aria-controls="panel-features" aria-selected="false">✨ Возможности</a>
+    </nav>
+  </header>
 
-    <!-- Install -->
-    <div class="card">
-      <div class="card-header">
-        <span class="icon">🔧</span>
-        <h2>Установка</h2>
-      </div>
-      <div class="card-body">
-        <div class="steps">
-          <div class="step">
-            <div class="step-num">1</div>
-            <div class="step-content">Скачай файл <code>.asi</code> из папки выше</div>
-          </div>
-          <div class="step">
-            <div class="step-num">2</div>
-            <div class="step-content">
-              Закинь его в папку с игрой — туда, где лежит <code>GTA_SA.exe</code><br>
-              <span style="color:var(--muted); font-size:13px;">⚠️ Не переименовывай файл — это сломает автообновление</span>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">3</div>
-            <div class="step-content">Запусти игру</div>
-          </div>
-          <div class="step">
-            <div class="step-num">4</div>
-            <div class="step-content">Нажми <code>INSERT</code> — откроется меню плагина</div>
-          </div>
-          <div class="step">
-            <div class="step-num">5</div>
-            <div class="step-content">
-              Введи лицензионный ключ во вкладке «Ввести ключ»<br>
-              или введи в игровой чат: <code>/rh_activate [ключ]</code><br>
-              <span style="color:var(--muted); font-size:13px;">⏱ Срок действия лицензии начинается с момента первой активации</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <!-- ═════════════ ВКЛАДКА «УСТАНОВКА» ═════════════ -->
+  <section class="panel" id="panel-install" role="tabpanel" aria-labelledby="tab-install">
+    <div class="col">
 
-    <!-- Telegram -->
-    <div class="card">
-      <div class="card-header">
-        <span class="icon">🤖</span>
-        <h2>Telegram</h2>
-      </div>
-      <div class="card-body">
-        <div class="tg-links">
-          <a class="tg-link" href="https://t.me/reseller_helper_radmir_bot" target="_blank" rel="noopener">
-            <span class="tg-icon">🤖</span>
-            <div class="tg-info">
-              <span class="tg-label">Бот для уведомлений</span>
-              <span class="tg-name">@reseller_helper_radmir_bot</span>
-            </div>
+      <div class="banner reveal">🎉 Спасибо за покупку! Добро пожаловать в Reseller Helper.</div>
+
+      <!-- Скачать -->
+      <div class="card reveal">
+        <div class="card-header"><span class="icon">📥</span><h2>Скачать плагин</h2></div>
+        <div class="card-body">
+          <a class="link-row"
+             href="https://drive.google.com/drive/folders/1YSoB1tUZCwM6XsDSWRnuG4-AX45DZQIi?usp=sharing"
+             target="_blank" rel="noopener">
+            <span class="li-icon">📁</span>
+            <span class="li-name">Открыть папку на Google Drive</span>
           </a>
         </div>
       </div>
-    </div>
 
-    <!-- Footer -->
-    <div class="footer">
-      <strong>Удачных продаж!</strong> 💰
-    </div>
+      <!-- Установка -->
+      <div class="card reveal" id="setup">
+        <div class="card-header"><span class="icon">🔧</span><h2>Установка</h2></div>
+        <div class="card-body">
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-content">Скачай файл <code>.asi</code> из папки выше.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                Закинь его в папку с игрой — туда, где лежит <code>GTA_SA.exe</code>.
+                <div class="note warn">⚠️ Не переименовывай файл — это сломает автообновление (<a href="#faq-rename">почему</a>).</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-content">
+                Запусти игру. Когда зайдёшь на сервер, в чате появится <code>[Reseller Helper] Plg OK</code> — плагин работает.
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-content">
+                Активируй ключ — любым способом:
+                <ol class="ways">
+                  <li>
+                    <kbd>M</kbd> → <span class="ui">«Персонаж»</span> → карточка <span class="ui">Reseller Helper</span> → <span class="ui">«Активировать»</span>. Нажми <span class="ui">«Вставить»</span> и <span class="ui">«Активировать»</span>.<span class="best">удобнее всего</span>
+                  </li>
+                  <li>Нажми <kbd>INSERT</kbd> — откроется меню плагина — пункт <span class="ui">«Ввести ключ»</span>.</li>
+                  <li>Введи в игровой чат: <code class="wrap-ok">/rh_activate RHLP-XXXX-XXXX-XXXX</code></li>
+                </ol>
+                <div class="note">⏱ Срок действия начинается с первой активации. Ключ привязывается к этому компьютеру.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">5</div>
+              <div class="step-content">
+                Готово! Меню плагина — <kbd>INSERT</kbd>, команда <code>/rh</code> или клик по карточке в <kbd>M</kbd> → «Персонаж».
+                Что умеет плагин — во вкладке <a href="#features">«Возможности»</a>.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  </div>
+      <!-- Telegram -->
+      <div class="card reveal" id="tg">
+        <div class="card-header">
+          <span class="icon">🤖</span><h2>Подключить Telegram</h2>
+          <span class="pill paid">Платно</span>
+        </div>
+        <div class="card-body">
+          <a class="link-row" href="https://t.me/reseller_helper_radmir_bot" target="_blank" rel="noopener">
+            <span class="li-icon">🤖</span>
+            <span class="li-info">
+              <span class="li-label">Бот для уведомлений</span>
+              <span class="li-name">@reseller_helper_radmir_bot</span>
+            </span>
+          </a>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-content">Открой бота по ссылке выше и нажми <span class="ui">«Запустить»</span> (или отправь <code>/start</code>).</div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-content">В игре: <kbd>INSERT</kbd> → <span class="ui">«Telegram»</span> → в поле <span class="ui">«Ваш Telegram ник»</span> впиши свой ник, например <code>@ivan_reseller</code>.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-content">
+                Нажми <span class="ui">«Проверить соединение»</span>. Должно появиться «Telegram подключён!», а бот пришлёт сообщение.
+                <div class="note">Ошибка 404 — значит, боту ещё не отправлен <code>/start</code>.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-content">Там же включи уведомления: о новых SMS и звонках и, если нужно, о месте в очереди.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Частые вопросы -->
+      <div class="card reveal" id="faq">
+        <div class="card-header"><span class="icon">💬</span><h2>Частые вопросы</h2></div>
+        <div class="card-body">
+          <div class="faq">
+            <details id="faq-antivirus">
+              <summary>Антивирус удалил или блокирует файл</summary>
+              <div class="answer">
+                <p>Плагин встраивается в игру — так работают все <code>.asi</code>-моды, поэтому антивирус иногда принимает его за подозрительный файл. Если Windows Defender удалил плагин:</p>
+                <ol>
+                  <li>Открой <span class="ui">«Безопасность Windows»</span> → <span class="ui">«Защита от вирусов и угроз»</span> → <span class="ui">«Журнал защиты»</span>.</li>
+                  <li>Найди запись с <code>reseller-helper</code> → <span class="ui">«Действия»</span> → <span class="ui">«Восстановить»</span> или <span class="ui">«Разрешить на устройстве»</span>.</li>
+                  <li>Чтобы это не повторялось, добавь файл в исключения: <span class="ui">«Управление настройками»</span> → <span class="ui">«Исключения»</span> → <span class="ui">«Добавить исключение»</span> → <span class="ui">«Файл»</span>.</li>
+                </ol>
+                <p class="note">Скачивай плагин только по ссылке с этой страницы.</p>
+              </div>
+            </details>
+            <details id="faq-pc">
+              <summary>Сменил компьютер — ключ не активируется</summary>
+              <div class="answer">
+                <p>Ключ привязан к компьютеру, на котором его активировали. На другом ПК появится «Лицензия привязана к другому ПК — обратитесь в поддержку».</p>
+                <p>Напиши продавцу в чат заказа на FunPay — привязку сбросят, и ключ можно будет активировать на новом компьютере. Оставшийся срок сохранится.</p>
+              </div>
+            </details>
+            <details id="faq-update">
+              <summary>Как обновить плагин</summary>
+              <div class="answer">
+                <p>Скачивать файл заново не нужно. Когда выйдет новая версия, в чате появится «Доступно обновление».</p>
+                <ol>
+                  <li>Нажми <kbd>INSERT</kbd> и кнопку <span class="ui">«Обновить до v…»</span> внизу меню (или введи <code>/rh_update</code>).</li>
+                  <li>Дождись сообщения «Обновление загружено!» и перезапусти игру.</li>
+                </ol>
+                <p class="note">Старый файл можно не удалять — он не мешает новой версии.</p>
+              </div>
+            </details>
+            <details id="faq-rename">
+              <summary>Почему нельзя переименовывать файл</summary>
+              <div class="answer">
+                <p>Плагин узнаёт свою версию по имени файла — <code>reseller-helper-v1.2.3.asi</code>. Обновление скачивается рядом со старым файлом, и при запуске игры старая версия уступает место новой, сравнивая имена.</p>
+                <p>Если файл переименовать, плагин не поймёт, какая версия новее, и обновления перестанут ставиться правильно.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer"><strong>Удачных продаж!</strong> 💰</div>
+    </div>
+  </section>
+
+  <!-- ═════════════ ВКЛАДКА «ВОЗМОЖНОСТИ» ═════════════ -->
+  <section class="panel" id="panel-features" role="tabpanel" aria-labelledby="tab-features" hidden>
+    <div class="features-layout">
+
+      <!-- Оглавление -->
+      <nav class="toc" aria-label="Оглавление">
+        <ol class="toc-list" id="toc-list">
+          <li class="toc-ind-wrap" aria-hidden="true"><span class="toc-ind" id="toc-ind"></span></li>
+          <li><a href="#open"><span class="n">→</span><span class="t">Как открыть меню</span></a></li>
+          <li class="toc-group"><span class="dot paid"></span>Платная версия</li>
+          <li><a href="#telegram"><span class="n">1</span><span class="t">SMS и звонки в Telegram</span></a></li>
+          <li><a href="#cases"><span class="n">2</span><span class="t">Скупка кейсов</span></a></li>
+          <li><a href="#ai"><span class="n">3</span><span class="t">AI-анализ чата</span></a></li>
+          <li><a href="#auto"><span class="n">4</span><span class="t">Автоматизация</span></a></li>
+          <li><a href="#queue"><span class="n">5</span><span class="t">Место в очереди</span></a></li>
+          <li class="toc-group"><span class="dot free"></span>Бесплатная версия</li>
+          <li><a href="#tdo"><span class="n">1</span><span class="t">Редактор TDO</span></a></li>
+          <li><a href="#messages"><span class="n">2</span><span class="t">Быстрые сообщения</span></a></li>
+          <li><a href="#menu"><span class="n">3</span><span class="t">Карточка в меню игры</span></a></li>
+          <li><a href="#chat"><span class="n">4</span><span class="t">Скрытые сообщения</span></a></li>
+          <li><a href="#update"><span class="n">5</span><span class="t">Обновления</span></a></li>
+          <li><a href="#buy"><span class="n">₽</span><span class="t">Купить ключ</span></a></li>
+        </ol>
+      </nav>
+
+      <div class="features-main">
+
+        <!-- Как открыть меню -->
+        <div class="intro reveal" id="open" data-toc>
+          <h2>Как открыть меню плагина</h2>
+          <div class="open-ways">
+            <div class="open-way"><span class="key"><kbd>INSERT</kbd></span><span>клавиша в игре</span></div>
+            <div class="open-way"><span class="key"><code>/rh</code></span><span>команда в чат</span></div>
+            <div class="open-way"><span class="key"><kbd>M</kbd> → «Персонаж»</span><span>клик по карточке Reseller Helper</span></div>
+          </div>
+          <p class="note">Закрыть меню — <kbd>ESC</kbd> или крестик. Без ключа платные пункты меню отмечены замком.</p>
+        </div>
+
+        <!-- ───── Платная версия ───── -->
+        <div class="block-head reveal" id="paid">
+          <h2>Платная версия</h2><span class="pill paid">Платно</span>
+          <p>Работает, пока активен ключ. Все бесплатные функции тоже входят.</p>
+        </div>
+
+        <article class="feat is-paid reveal" id="telegram" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">📱<span class="feat-num">1</span></div>
+            <div>
+              <div class="feat-title"><h3>SMS и звонки в Telegram</h3><span class="pill paid">Платно</span></div>
+              <p class="feat-desc">Тебе пишут или звонят в игре, а ты не за компом — бот сразу присылает ник, номер и текст SMS. Отвечай прямо из Telegram: ответ уйдёт в игру как SMS, можно торговаться не вставая с дивана.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li>Подключи бота — 4 шага во вкладке <a href="#tg">«Установка» → Telegram</a>.</li>
+                <li>Под уведомлением о SMS нажми <span class="ui">«📝 Ответить»</span> и напиши текст.</li>
+                <li>На входящий звонок — кнопка <span class="ui">«✉️ Написать SMS»</span>.</li>
+                <li>Игра должна быть запущена: ответы отправляются через неё.</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Включить / выключить</h4><span><kbd>INSERT</kbd> → «Telegram» → «Отправлять уведомление на новые смс и звонки»</span></div>
+          </div>
+          <figure class="shot"><img src="img/features/telegram.png" alt="Уведомления о SMS и звонке в Telegram-боте"><figcaption class="slot-label">img/features/telegram.png</figcaption></figure>
+        </article>
+
+        <article class="feat is-paid reveal" id="cases" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">🎁<span class="feat-num">2</span></div>
+            <div>
+              <div class="feat-title"><h3>Скупка кейсов в магазине</h3><span class="pill paid">Платно</span></div>
+              <p class="feat-desc">Отмечаешь нужные кейсы и задаёшь порядок — плагин покупает их по очереди, сколько хватит денег и жетонов. Может скупать сам в момент пополнения ассортимента.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li>Открой <kbd>M</kbd> → <span class="ui">«Магазин»</span>: над разделом «Кейсы» появится карточка <span class="ui">«Автоскупка кейсов»</span>.</li>
+                <li>Отметь кейсы галочкой, порядок меняй стрелками <span class="ui">▲ ▼</span> на карточке кейса.</li>
+                <li>Жми <span class="ui">«Скупить сейчас»</span>; прервать — <span class="ui">«Остановить»</span>.</li>
+                <li>Галочка <span class="ui">«Скупать при пополнении»</span> — купит сам, если магазин открыт в момент пополнения.</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Показать / убрать</h4><span><kbd>INSERT</kbd> → «Настройки» → «Скупка кейсов в магазине»</span></div>
+          </div>
+          <figure class="shot"><img src="img/features/cases.png" alt="Карточка «Автоскупка кейсов» в магазине игры"><figcaption class="slot-label">img/features/cases.png</figcaption></figure>
+        </article>
+
+        <article class="feat is-paid reveal" id="ai" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">🧠<span class="feat-num">3</span></div>
+            <div>
+              <div class="feat-title"><h3>AI-анализ чата</h3><span class="pill paid">Платно</span></div>
+              <p class="feat-desc">Плагин читает чат в реальном времени и помечает объявления: <b style="color:#e5484d">(S)</b> — продают, <b style="color:#3d8ee0">(B)</b> — покупают. Нужные сделки видно сразу, не надо вчитываться в поток сообщений.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li><kbd>INSERT</kbd> → <span class="ui">«AI-анализ»</span> → включи <span class="ui">«Включить AI функционал»</span>.</li>
+                <li>При первом включении скачается модель — в чате появится «Модель загружена. Анализ включён».</li>
+                <li>Покупку и продажу можно включать отдельно: <span class="ui">«Анализ объявлений о покупке / о продаже»</span>.</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Включить / выключить</h4><span><kbd>INSERT</kbd> → «AI-анализ»</span></div>
+          </div>
+          <figure class="shot"><img src="img/features/ai.png" alt="Чат игры с метками (S) и (B)"><figcaption class="slot-label">img/features/ai.png</figcaption></figure>
+        </article>
+
+        <article class="feat is-paid reveal" id="auto" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">⏱️<span class="feat-num">4</span></div>
+            <div>
+              <div class="feat-title"><h3>Автоматизация</h3><span class="pill paid">Платно</span></div>
+              <p class="feat-desc">Реклама уходит сама: выбираешь сохранённый текст и интервал — плагин отправляет его в <code>/s</code>, <code>/fb_msg</code> или <code>/fm</code> по расписанию. Несколько задач идут по очереди с паузой, чтобы не словить КД сервера.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li>Сначала сохрани текст на вкладке <span class="ui">/s</span>, <span class="ui">/fb_msg</span> или <span class="ui">/fm</span>.</li>
+                <li><kbd>INSERT</kbd> → <span class="ui">«Автоматизация»</span> → <span class="ui">«Новая задача»</span>: канал, интервал (5–60 минут или свой), текст → <span class="ui">«Запустить»</span>.</li>
+                <li>Пауза и удаление — в строке задачи, <span class="ui">«Запустить все» / «Остановить все»</span> — сверху.</li>
+                <li><span class="ui">«Параметры»</span>: пауза между отправками (1–30 с) и «Слать при свёрнутой игре».</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Важно</h4><span>После перезапуска игры задачи стоят на паузе — нажми «Запустить все».</span></div>
+          </div>
+          <figure class="shot"><img src="img/features/auto.png" alt="Страница «Автоматизация» со списком задач"><figcaption class="slot-label">img/features/auto.png</figcaption></figure>
+        </article>
+
+        <article class="feat is-paid reveal" id="queue" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">🔔<span class="feat-num">5</span></div>
+            <div>
+              <div class="feat-title"><h3>Место в очереди в Telegram</h3><span class="pill paid">Платно</span></div>
+              <p class="feat-desc">Сервер полный и ты в очереди? Можно отойти от компьютера — бот напишет, когда твоё место станет не дальше заданного.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li>Подключи бота — <a href="#tg">шаги во вкладке «Установка»</a>.</li>
+                <li><kbd>INSERT</kbd> → <span class="ui">«Telegram»</span> → в поле <span class="ui">«Уведомлять при достижении места»</span> укажи номер (по умолчанию 20).</li>
+                <li>Бот пришлёт «📋 Ваше место в очереди: N» — один раз, когда дойдёшь до этого места.</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Включить / выключить</h4><span><kbd>INSERT</kbd> → «Telegram» → «Отправлять уведомление на изменение места в очереди»</span></div>
+          </div>
+          <figure class="shot"><img src="img/features/queue.png" alt="Настройки Telegram в меню плагина"><figcaption class="slot-label">img/features/queue.png</figcaption></figure>
+        </article>
+
+        <!-- ───── Бесплатная версия ───── -->
+        <div class="block-head reveal" id="free">
+          <h2>Бесплатная версия</h2><span class="pill free">Бесплатно</span>
+          <p>Работает сразу после установки, без ключа.</p>
+        </div>
+
+        <article class="feat is-free reveal" id="tdo" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">📢<span class="feat-num">1</span></div>
+            <div>
+              <div class="feat-title"><h3>Редактор TDO</h3><span class="pill free">Бесплатно</span></div>
+              <p class="feat-desc">Объявления <code>/tdo</code> без ручного набора команды: цвет, приватность и длительность выставляешь мышкой и сразу видишь, как это будет выглядеть.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li><kbd>INSERT</kbd> → <span class="ui">«TDO»</span>: выбери «Личный» или «Для всех», длительность (до 3600 сек) и цвет — из палитры или HEX.</li>
+                <li>Проверь <span class="ui">«Предпросмотр»</span> и жми <span class="ui">«Разместить»</span>.</li>
+                <li><span class="ui">«Сохранить TDO»</span> — шаблон попадёт в список; клик по нему вернёт текст и все настройки.</li>
+              </ul>
+            </div>
+          </div>
+          <figure class="shot"><img src="img/features/tdo.png" alt="Редактор TDO с предпросмотром"><figcaption class="slot-label">img/features/tdo.png</figcaption></figure>
+        </article>
+
+        <article class="feat is-free reveal" id="messages" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">💬<span class="feat-num">2</span></div>
+            <div>
+              <div class="feat-title"><h3>Быстрые сообщения</h3><span class="pill free">Бесплатно</span></div>
+              <p class="feat-desc">Тексты для <code>/s</code>, <code>/fb_msg</code>, <code>/fm</code> и <code>/ad</code> сохраняешь один раз — дальше отправка в один клик. <code>/s</code> — крик в чат, <code>/fb_msg</code> — чат футбольной команды, <code>/fm</code> — чат банды, <code>/ad</code> — объявление.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li><kbd>INSERT</kbd> → вкладка нужной команды, впиши текст (до 255 символов).</li>
+                <li><span class="ui">«Сохранить»</span> — текст попадёт в «Сохранённые»; клик по строке подставит его в поле.</li>
+                <li><span class="ui">«Отправить»</span> — сообщение уйдёт в игру, <span class="ui">«Копировать команду»</span> — в буфер обмена.</li>
+              </ul>
+            </div>
+          </div>
+          <figure class="shot"><img src="img/features/messages.png" alt="Вкладка /s с сохранёнными сообщениями"><figcaption class="slot-label">img/features/messages.png</figcaption></figure>
+        </article>
+
+        <article class="feat is-free reveal" id="menu" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">🪪<span class="feat-num">3</span></div>
+            <div>
+              <div class="feat-title"><h3>Карточка в меню игры</h3><span class="pill free">Бесплатно</span></div>
+              <p class="feat-desc">В <kbd>M</kbd> → «Персонаж» появляется карточка Reseller Helper: статус подписки, тариф и сколько дней осталось. Ключ можно активировать прямо отсюда.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li>Клик по карточке открывает меню плагина.</li>
+                <li><span class="ui">«Активировать»</span> — окно ввода ключа: <span class="ui">«Вставить»</span> → <span class="ui">«Активировать»</span>. <kbd>ESC</kbd> закрывает только это окно.</li>
+                <li>Кнопка «Документы» остаётся рядом, клавиша <kbd>G</kbd> работает как раньше.</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Показать / убрать</h4><span><kbd>INSERT</kbd> → «Настройки» → «Информация о плагине в главном меню»</span></div>
+          </div>
+          <figure class="shot"><img src="img/features/menu.png" alt="Карточка Reseller Helper во вкладке «Персонаж»"><figcaption class="slot-label">img/features/menu.png</figcaption></figure>
+        </article>
+
+        <article class="feat is-free reveal" id="chat" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">👁️<span class="feat-num">4</span></div>
+            <div>
+              <div class="feat-title"><h3>Скрытые сообщения в чате</h3><span class="pill free">Бесплатно</span></div>
+              <p class="feat-desc">Игра прячет часть сообщений за плашками «СКРЫТО» и «УДАЛЕНО» — плагин показывает их целиком, включая облака над головой. Сообщения, которые удалил сервер, не возвращаются.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li>Ничего делать не нужно — работает сразу после установки.</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Включить / выключить</h4><span><kbd>INSERT</kbd> → «Настройки» → «Показывать скрытые сообщения в чате»</span></div>
+          </div>
+        </article>
+
+        <article class="feat is-free reveal" id="update" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">⬇️<span class="feat-num">5</span></div>
+            <div>
+              <div class="feat-title"><h3>Обновления в один клик</h3><span class="pill free">Бесплатно</span></div>
+              <p class="feat-desc">Новая версия ставится без поиска файлов: плагин сам сообщит о ней в чате и скачает по кнопке.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li>В чате появится «Доступно обновление: v…».</li>
+                <li><kbd>INSERT</kbd> → кнопка <span class="ui">«Обновить до v…»</span> внизу меню или команда <code>/rh_update</code>.</li>
+                <li>После «Обновление загружено!» перезапусти игру.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- Призыв -->
+        <div class="cta reveal" id="buy" data-toc>
+          <h2>Открой все функции</h2>
+          <p>Telegram, скупка кейсов, AI-анализ и автоматизация работают с активным ключом. Ключ и продление — на <b>FunPay</b>.</p>
+          <p>Когда срок закончится, новый ключ вводится так же: <b>M → «Персонаж» → «Активировать»</b> или <b>INSERT → «Ввести ключ»</b>.</p>
+          <div class="cta-actions">
+            <a class="btn btn-neon" id="buy-link" href="#" target="_blank" rel="noopener" hidden>Купить или продлить ключ →</a>
+            <a class="btn btn-ghost" href="#setup">Как установить и активировать</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div>
+
+<button class="to-top" id="to-top" type="button" aria-label="Наверх">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+(function () {
+  // Ссылка на лот FunPay для кнопки «Купить или продлить ключ». Пусто — кнопка скрыта.
+  var BUY_URL = '';
+
+  var root = document.documentElement;
+  root.classList.add('js');
+  if (/[?&]slots\b/.test(location.search)) root.classList.add('show-slots');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (BUY_URL) { var b = document.getElementById('buy-link'); b.href = BUY_URL; b.hidden = false; }
+
+  // ── Скриншоты: показываем, только если файл есть ──
+  document.querySelectorAll('.shot img').forEach(function (img) {
+    var fig = img.closest('.shot');
+    function ok() { fig.classList.add('ok'); fig.classList.remove('missing'); }
+    function bad() { fig.classList.add('missing'); }
+    if (img.complete) { img.naturalWidth ? ok() : bad(); }
+    img.addEventListener('load', ok);
+    img.addEventListener('error', bad);
+  });
+
+  // ── Вкладки и адрес ──
+  var tabsEl = document.querySelector('.tabs');
+  var panels = { install: document.getElementById('panel-install'), features: document.getElementById('panel-features') };
+  var tabs = { install: document.getElementById('tab-install'), features: document.getElementById('tab-features') };
+  var current = null;
+
+  function tabOf(id) {
+    if (id === 'install' || id === 'features') return id;
+    var el = document.getElementById(id);
+    if (!el) return null;
+    if (panels.features.contains(el)) return 'features';
+    if (panels.install.contains(el)) return 'install';
+    return null;
+  }
+
+  function showTab(name) {
+    if (current === name) return false;
+    var first = current === null;
+    current = name;
+    Object.keys(panels).forEach(function (k) {
+      var on = k === name;
+      panels[k].hidden = !on;
+      tabs[k].setAttribute('aria-selected', on ? 'true' : 'false');
+      tabs[k].tabIndex = on ? 0 : -1;
+    });
+    var thumb = tabsEl.querySelector('.tab-thumb');
+    if (first) thumb.style.transition = 'none';   // при загрузке — без анимации
+    tabsEl.setAttribute('data-active', name);
+    if (first) { void thumb.offsetWidth; thumb.style.transition = ''; }
+    if (!first) {
+      var p = panels[name];
+      p.classList.remove('enter'); void p.offsetWidth; p.classList.add('enter');
+    }
+    if (name === 'features') requestAnimationFrame(function () { moveIndicator(true); });
+    return true;
+  }
+
+  // Пункт ещё может быть сдвинут анимацией появления — показываем его сразу, чтобы прокрутка встала точно
+  function settle(el) {
+    var r = el.classList.contains('reveal') ? el : el.closest('.reveal');
+    if (r) { r.classList.add('in', 'settled'); revealIO.unobserve(r); }
+  }
+  function scrollToEl(el, instant) {
+    settle(el);
+    // offsetTop не учитывает transform (анимации появления и смены вкладки), поэтому позиция точная
+    var y = 0, n = el;
+    while (n) { y += n.offsetTop; n = n.offsetParent; }
+    y -= parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
+    window.scrollTo({ top: Math.max(0, y), behavior: (instant || reduce.matches) ? 'instant' : 'smooth' });
+  }
+
+  // Открыть цель из адреса или ссылки: вкладка (#install/#features) или пункт внутри неё
+  function go(id, fromLoad) {
+    var tab = tabOf(id) || 'install';
+    var changed = showTab(tab);
+    if (id === tab || !document.getElementById(id) || id === '') {
+      if (changed && !fromLoad) window.scrollTo({ top: 0, behavior: 'instant' });
+      return;
+    }
+    var el = document.getElementById(id);
+    if (el.tagName === 'DETAILS') el.open = true;
+    // ждём кадр, чтобы панель успела отрисоваться
+    requestAnimationFrame(function () {
+      scrollToEl(el, fromLoad || changed);
+      if (fromLoad || changed) setActive(id, true);
+      // браузер сам прокручивает к #якорю при загрузке — поправляем после него
+      if (fromLoad && document.readyState !== 'complete')
+        window.addEventListener('load', function () { setTimeout(function () { scrollToEl(el, true); }, 0); }, { once: true });
+    });
+  }
+
+  function hashId() { return decodeURIComponent(location.hash.slice(1)); }
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    var id = a.getAttribute('href').slice(1);
+    if (id && !tabOf(id)) return;
+    e.preventDefault();
+    var tab = tabOf(id) || 'install';
+    // В адресе — вкладка; для ссылок на пункт другой вкладки — сам пункт (чтобы им можно было поделиться)
+    var target = (a.closest('.toc') || id === tab) ? tab : id;
+    if (('#' + target) !== location.hash) history.pushState(null, '', '#' + target);
+    go(id, false);
+    if (a.closest('.toc') && id !== tab) { setActive(id, true); }
+  });
+
+  window.addEventListener('popstate', function () { go(hashId(), false); });
+  window.addEventListener('hashchange', function () { go(hashId(), false); });
+
+  // Стрелки на вкладках (доступность)
+  tabsEl.addEventListener('keydown', function (e) {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    var next = current === 'install' ? 'features' : 'install';
+    history.pushState(null, '', '#' + next);
+    go(next, false);
+    tabs[next].focus();
+  });
+
+  // ── Оглавление: подсветка текущего пункта ──
+  var toc = document.querySelector('.toc');
+  var tocList = document.getElementById('toc-list');
+  var ind = document.getElementById('toc-ind');
+  var links = {};
+  tocList.querySelectorAll('a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+  var sections = Array.prototype.slice.call(document.querySelectorAll('[data-toc]'));
+  var activeId = sections[0].id;
+  var lockUntil = 0;
+
+  function moveIndicator(instant) {
+    var a = links[activeId];
+    if (!a || panels.features.hidden) return;
+    if (instant) ind.style.transition = 'none';
+    ind.style.width = a.offsetWidth + 'px';
+    ind.style.height = a.offsetHeight + 'px';
+    ind.style.transform = 'translate(' + a.offsetLeft + 'px,' + a.offsetTop + 'px)';
+    ind.style.opacity = '1';
+    if (instant) { void ind.offsetWidth; ind.style.transition = ''; }
+    // держим активный пункт в видимой части оглавления
+    var horizontal = toc.scrollWidth > toc.clientWidth + 2;
+    if (horizontal) {
+      var left = a.offsetLeft - (toc.clientWidth - a.offsetWidth) / 2;
+      toc.scrollTo({ left: Math.max(0, left), behavior: (instant || reduce.matches) ? 'auto' : 'smooth' });
+    } else if (toc.scrollHeight > toc.clientHeight + 2) {
+      var top = a.offsetTop - toc.clientHeight / 2;
+      toc.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
+    }
+  }
+
+  function setActive(id, lock) {
+    if (lock) lockUntil = Date.now() + 900;   // пока идёт плавная прокрутка, не перескакиваем
+    if (!links[id] || id === activeId) { moveIndicator(); return; }
+    if (links[activeId]) links[activeId].classList.remove('active');
+    activeId = id;
+    links[id].classList.add('active');
+    links[id].setAttribute('aria-current', 'true');
+    Object.keys(links).forEach(function (k) { if (k !== id) links[k].removeAttribute('aria-current'); });
+    moveIndicator();
+  }
+  links[activeId].classList.add('active');
+
+  var visible = {};
+  var spy = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) { visible[en.target.id] = en.isIntersecting; });
+    if (Date.now() < lockUntil) return;
+    // у самого низа страницы — последний пункт
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) { setActive(sections[sections.length - 1].id); return; }
+    for (var i = 0; i < sections.length; i++) {
+      if (visible[sections[i].id]) { setActive(sections[i].id); return; }
+    }
+  }, { rootMargin: '-90px 0px -55% 0px', threshold: 0 });
+  sections.forEach(function (s) { spy.observe(s); });
+
+  window.addEventListener('scroll', function () {
+    if (Date.now() < lockUntil || panels.features.hidden) return;
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) setActive(sections[sections.length - 1].id);
+  }, { passive: true });
+  window.addEventListener('resize', function () { moveIndicator(true); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { moveIndicator(true); });
+
+  // ── Появление при прокрутке (по очереди) ──
+  var revealIO = new IntersectionObserver(function (entries) {
+    var batch = entries.filter(function (en) { return en.isIntersecting; });
+    batch.forEach(function (en, i) {
+      var el = en.target;
+      el.style.setProperty('--d', (reduce.matches ? 0 : Math.min(i, 5) * 80) + 'ms');
+      el.classList.add('in');
+      revealIO.unobserve(el);
+      setTimeout(function () { el.classList.add('settled'); el.style.removeProperty('--d'); }, 700 + i * 80);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(function (el) { revealIO.observe(el); });
+
+  // ── Кнопка «наверх» ──
+  var topBtn = document.getElementById('to-top');
+  function onScroll() { topBtn.classList.toggle('show', window.scrollY > 600); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: reduce.matches ? 'auto' : 'smooth' });
+  });
+
+  // ── Старт ──
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  go(hashId(), true);
+})();
+</script>
 </body>
 </html>
