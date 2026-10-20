@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reseller Helper — установка и возможности</title>
-  <meta name="description" content="Reseller Helper — плагин для Radmir RP: SMS и звонки в Telegram, скупка кейсов, AI-анализ чата, автореклама, редактор TDO.">
+  <meta name="description" content="Reseller Helper — плагин для Radmir RP: цены всех киосков и честный рынок, SMS и звонки в Telegram, скупка кейсов, AI-анализ чата, автореклама, редактор TDO.">
   <meta property="og:title" content="Reseller Helper — плагин для Radmir RP">
-  <meta property="og:description" content="SMS и звонки в Telegram, скупка кейсов, AI-анализ чата, автореклама по расписанию.">
+  <meta property="og:description" content="Цены всех киосков сервера, SMS и звонки в Telegram, скупка кейсов, AI-анализ чата, автореклама по расписанию.">
   <meta name="theme-color" content="#0d1117">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -355,6 +355,7 @@
     }
     .pill.paid { background: var(--accent); color: var(--on-accent); }
     .pill.free { background: var(--free-soft); color: var(--free); }
+    .pill.new  { background: transparent; color: var(--warn); box-shadow: inset 0 0 0 1.5px currentColor; padding: 2px 9px; }
 
     /* Заголовки блоков */
     .block-head {
@@ -647,7 +648,7 @@
             <div class="step">
               <div class="step-num">5</div>
               <div class="step-content">
-                Готово! Меню плагина — <kbd>INSERT</kbd>, команда <code>/rh</code> или клик по карточке в <kbd>M</kbd> → «Персонаж».
+                Готово! Меню плагина — <kbd>INSERT</kbd> (клавишу можно сменить: <a href="#hotkey">как</a>), команда <code>/rh</code> или клик по карточке в <kbd>M</kbd> → «Персонаж».
                 Что умеет плагин — во вкладке <a href="#features">«Возможности»</a>.
               </div>
             </div>
@@ -698,6 +699,18 @@
         <div class="card-header"><span class="icon">💬</span><h2>Частые вопросы</h2></div>
         <div class="card-body">
           <div class="faq">
+            <details id="faq-restore">
+              <summary>Плагин пропал после обновления игры или очистки файлов</summary>
+              <div class="answer">
+                <p>Лаунчер Radmir при обновлении и «очистке файлов» удаляет из папки игры всё лишнее — и файл плагина тоже. Скачивать его вручную не нужно: верни плагин утилитой <b>Restore RH</b>.</p>
+                <ol>
+                  <li>Открой <span class="ui">Документы</span> → <span class="ui">RADMIR CRMP User Files</span> и запусти <code>RH-updater.exe</code>.</li>
+                  <li>Нажми <span class="ui">«↻ Восстановить RH»</span> — скачается последняя версия плагина. Если Windows спросит права администратора, разреши: они нужны только чтобы положить файл в папку игры.</li>
+                  <li>Откроется лаунчер — запускай игру как обычно.</li>
+                </ol>
+                <p class="note">Утилиту плагин кладёт в эту папку сам при входе в игру, начиная с версии 0.5.1, и держит её свежей. Если её там нет — скачай плагин заново по <a href="#setup">ссылке выше</a>.</p>
+              </div>
+            </details>
             <details id="faq-antivirus">
               <summary>Антивирус удалил или блокирует файл</summary>
               <div class="answer">
@@ -753,17 +766,22 @@
           <li class="toc-ind-wrap" aria-hidden="true"><span class="toc-ind" id="toc-ind"></span></li>
           <li><a href="#open"><span class="n">→</span><span class="t">Как открыть меню</span></a></li>
           <li class="toc-group"><span class="dot paid"></span>Платная версия</li>
-          <li><a href="#telegram"><span class="n">1</span><span class="t">SMS и звонки в Telegram</span></a></li>
-          <li><a href="#cases"><span class="n">2</span><span class="t">Скупка кейсов</span></a></li>
-          <li><a href="#ai"><span class="n">3</span><span class="t">AI-анализ чата</span></a></li>
-          <li><a href="#auto"><span class="n">4</span><span class="t">Автоматизация</span></a></li>
-          <li><a href="#queue"><span class="n">5</span><span class="t">Место в очереди</span></a></li>
+          <li><a href="#items"><span class="n">1</span><span class="t">Предметы и цены киосков</span></a></li>
+          <li><a href="#inventory"><span class="n">2</span><span class="t">Цены в инвентаре и обмене</span></a></li>
+          <li><a href="#telegram"><span class="n">3</span><span class="t">SMS и звонки в Telegram</span></a></li>
+          <li><a href="#cases"><span class="n">4</span><span class="t">Скупка кейсов</span></a></li>
+          <li><a href="#ai"><span class="n">5</span><span class="t">AI-анализ чата</span></a></li>
+          <li><a href="#auto"><span class="n">6</span><span class="t">Автоматизация</span></a></li>
+          <li><a href="#queue"><span class="n">7</span><span class="t">Место в очереди</span></a></li>
           <li class="toc-group"><span class="dot free"></span>Бесплатная версия</li>
-          <li><a href="#tdo"><span class="n">1</span><span class="t">Редактор TDO</span></a></li>
-          <li><a href="#messages"><span class="n">2</span><span class="t">Быстрые сообщения</span></a></li>
-          <li><a href="#menu"><span class="n">3</span><span class="t">Карточка в меню игры</span></a></li>
-          <li><a href="#chat"><span class="n">4</span><span class="t">Скрытые сообщения</span></a></li>
-          <li><a href="#update"><span class="n">5</span><span class="t">Обновления</span></a></li>
+          <li><a href="#stall"><span class="n">1</span><span class="t">Подсказки в окне киоска</span></a></li>
+          <li><a href="#restore"><span class="n">2</span><span class="t">Restore RH</span></a></li>
+          <li><a href="#hotkey"><span class="n">3</span><span class="t">Своя клавиша меню</span></a></li>
+          <li><a href="#tdo"><span class="n">4</span><span class="t">Редактор TDO</span></a></li>
+          <li><a href="#messages"><span class="n">5</span><span class="t">Быстрые сообщения</span></a></li>
+          <li><a href="#menu"><span class="n">6</span><span class="t">Карточка в меню игры</span></a></li>
+          <li><a href="#chat"><span class="n">7</span><span class="t">Скрытые сообщения</span></a></li>
+          <li><a href="#update"><span class="n">8</span><span class="t">Обновления</span></a></li>
           <li><a href="#buy"><span class="n">₽</span><span class="t">Купить ключ</span></a></li>
         </ol>
       </nav>
@@ -774,11 +792,11 @@
         <div class="intro reveal" id="open" data-toc>
           <h2>Как открыть меню плагина</h2>
           <div class="open-ways">
-            <div class="open-way"><span class="key"><kbd>INSERT</kbd></span><span>клавиша в игре</span></div>
+            <div class="open-way"><span class="key"><kbd>INSERT</kbd></span><span>клавиша в игре — можно <a href="#hotkey">сменить</a></span></div>
             <div class="open-way"><span class="key"><code>/rh</code></span><span>команда в чат</span></div>
             <div class="open-way"><span class="key"><kbd>M</kbd> → «Персонаж»</span><span>клик по карточке Reseller Helper</span></div>
           </div>
-          <p class="note">Закрыть меню — <kbd>ESC</kbd> или крестик. Без ключа платные пункты меню отмечены замком.</p>
+          <p class="note">Закрыть меню — <kbd>ESC</kbd> или крестик. Меню открывается и поверх окон игры (киоск, магазин, <kbd>M</kbd>): <kbd>ESC</kbd> закрывает только меню плагина, окно игры остаётся. Без ключа платные пункты меню отмечены замком.</p>
         </div>
 
         <!-- ───── Платная версия ───── -->
@@ -787,9 +805,56 @@
           <p>Работает, пока активен ключ. Все бесплатные функции тоже входят.</p>
         </div>
 
+        <article class="feat is-paid reveal" id="items" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">📦<span class="feat-num">1</span></div>
+            <div>
+              <div class="feat-title"><h3>Предметы — цены всех киосков сервера</h3><span class="pill paid">Платно</span><span class="pill new">Новое</span></div>
+              <p class="feat-desc">Плагин запоминает витрину каждого открытого киоска, а все игроки с плагином пополняют общую таблицу цен — поэтому видны цены во всех 24 киосках ТЦ, даже в тех, к которым ты не подходил. Ищешь предмет — и сразу видишь минимальную цену, рыночную и в каком киоске дешевле.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li><kbd>INSERT</kbd> → <span class="ui">«Предметы»</span>: поиск, категории и сортировка <span class="ui">«сначала дешевле рынка»</span>.</li>
+                <li>В таблице — сколько лотов и в скольких киосках, минимальная цена, рынок и <span class="ui">«Где дешевле»</span> (номер киоска).</li>
+                <li>Возле минимальной цены — <b style="color:#30a46c">▼ N% к рынку</b>, если дешевле, или <b style="color:#e5484d">▲ +N%</b>, если дороже.</li>
+                <li>В <span class="ui">«Аксессуарах»</span> есть подкатегории: маски, рюкзаки, очки, бронежилеты и другие.</li>
+                <li>Клик по строке — карточка предмета: график цены за 30 дней, где купить сейчас (киоск, продавец, цена) и история выставлений.</li>
+                <li>Предметы, которых сейчас нет в продаже, тоже в списке: рынок и последние цены по истории.</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Что такое «рынок»</h4><span>Медиана цен по продавцам за 14 дней: у каждого продавца один голос — цена его последнего лота. Один завышенный лот или демпер рынок не сдвигают. Если продавцов меньше трёх, окно расширяется до 30 дней и дальше, а цифра помечается «мало данных».</span></div>
+          </div>
+          <figure class="shot"><img src="img/features/items.png" alt="Страница «Предметы»: рынок, минимальная цена и где дешевле"><figcaption class="slot-label">img/features/items.png</figcaption></figure>
+        </article>
+
+        <article class="feat is-paid reveal" id="inventory" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">🎒<span class="feat-num">2</span></div>
+            <div>
+              <div class="feat-title"><h3>Цены в инвентаре и обмене</h3><span class="pill paid">Платно</span><span class="pill new">Новое</span></div>
+              <p class="feat-desc">Наведи на предмет в инвентаре или в окне обмена с игроком — в карточке появится блок «В киосках»: средняя цена, рынок, минимум и три киоска, где дешевле. Сразу понятно, за сколько продавать и не переплачиваешь ли при обмене.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li>Открой инвентарь или обмен и наведи мышь на предмет.</li>
+                <li>Если предмета сейчас нет на витринах, видно рынок, среднюю и минимальную цену по истории и когда его видели в последний раз.</li>
+                <li>У аксессуаров показан номер модели — тот же, что в игре при продаже (ID).</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Включить / выключить</h4><span><kbd>INSERT</kbd> → «Настройки» → «Цены киосков в инвентаре и обмене»</span></div>
+          </div>
+          <figure class="shot"><img src="img/features/inventory.png" alt="Блок «В киосках» в карточке предмета инвентаря"><figcaption class="slot-label">img/features/inventory.png</figcaption></figure>
+        </article>
+
         <article class="feat is-paid reveal" id="telegram" data-toc>
           <div class="feat-top">
-            <div class="feat-icon" aria-hidden="true">📱<span class="feat-num">1</span></div>
+            <div class="feat-icon" aria-hidden="true">📱<span class="feat-num">3</span></div>
             <div>
               <div class="feat-title"><h3>SMS и звонки в Telegram</h3><span class="pill paid">Платно</span></div>
               <p class="feat-desc">Тебе пишут или звонят в игре, а ты не за компом — бот сразу присылает ник, номер и текст SMS. Отвечай прямо из Telegram: ответ уйдёт в игру как SMS, можно торговаться не вставая с дивана.</p>
@@ -812,7 +877,7 @@
 
         <article class="feat is-paid reveal" id="cases" data-toc>
           <div class="feat-top">
-            <div class="feat-icon" aria-hidden="true">🎁<span class="feat-num">2</span></div>
+            <div class="feat-icon" aria-hidden="true">🎁<span class="feat-num">4</span></div>
             <div>
               <div class="feat-title"><h3>Скупка кейсов в магазине</h3><span class="pill paid">Платно</span></div>
               <p class="feat-desc">Отмечаешь нужные кейсы и задаёшь порядок — плагин покупает их по очереди, сколько хватит денег и жетонов. Может скупать сам в момент пополнения ассортимента.</p>
@@ -835,7 +900,7 @@
 
         <article class="feat is-paid reveal" id="ai" data-toc>
           <div class="feat-top">
-            <div class="feat-icon" aria-hidden="true">🧠<span class="feat-num">3</span></div>
+            <div class="feat-icon" aria-hidden="true">🧠<span class="feat-num">5</span></div>
             <div>
               <div class="feat-title"><h3>AI-анализ чата</h3><span class="pill paid">Платно</span></div>
               <p class="feat-desc">Плагин читает чат в реальном времени и помечает объявления: <b style="color:#e5484d">(S)</b> — продают, <b style="color:#3d8ee0">(B)</b> — покупают. Нужные сделки видно сразу, не надо вчитываться в поток сообщений.</p>
@@ -857,7 +922,7 @@
 
         <article class="feat is-paid reveal" id="auto" data-toc>
           <div class="feat-top">
-            <div class="feat-icon" aria-hidden="true">⏱️<span class="feat-num">4</span></div>
+            <div class="feat-icon" aria-hidden="true">⏱️<span class="feat-num">6</span></div>
             <div>
               <div class="feat-title"><h3>Автоматизация</h3><span class="pill paid">Платно</span></div>
               <p class="feat-desc">Реклама уходит сама: выбираешь сохранённый текст и интервал — плагин отправляет его в <code>/s</code>, <code>/fb_msg</code> или <code>/fm</code> по расписанию. Несколько задач идут по очереди с паузой, чтобы не словить КД сервера.</p>
@@ -880,7 +945,7 @@
 
         <article class="feat is-paid reveal" id="queue" data-toc>
           <div class="feat-top">
-            <div class="feat-icon" aria-hidden="true">🔔<span class="feat-num">5</span></div>
+            <div class="feat-icon" aria-hidden="true">🔔<span class="feat-num">7</span></div>
             <div>
               <div class="feat-title"><h3>Место в очереди в Telegram</h3><span class="pill paid">Платно</span></div>
               <p class="feat-desc">Сервер полный и ты в очереди? Можно отойти от компьютера — бот напишет, когда твоё место станет не дальше заданного.</p>
@@ -906,9 +971,74 @@
           <p>Работает сразу после установки, без ключа.</p>
         </div>
 
+        <article class="feat is-free reveal" id="stall" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">🏷️<span class="feat-num">1</span></div>
+            <div>
+              <div class="feat-title"><h3>Подсказки цен в окне киоска</h3><span class="pill free">Бесплатно</span><span class="pill new">Новое</span></div>
+              <p class="feat-desc">Открываешь киоск в ТЦ — возле каждого ценника значок: <b style="color:#30a46c">▼ N%</b> — дешевле рынка, <b style="color:#e5484d">▲ N%</b> — дороже. Наведи на лот — всплывёт подсказка: рыночная цена и до пяти киосков, где этот предмет дешевле. Цены берутся из общей таблицы всех игроков с плагином.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li>GPS → «Торговый центр», подойди к киоску и нажми <kbd>ALT</kbd>.</li>
+                <li>Наведи мышь на лот — в подсказке рынок, сколько продавцов его составляют, и список «Дешевле» с номерами киосков.</li>
+                <li>Если дешевле нигде нет — будет «✓ Дешевле нигде нет» и ближайшие цены дороже.</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Включить / выключить</h4><span><kbd>INSERT</kbd> → «Настройки» → «Сравнение цен в киосках»</span></div>
+          </div>
+          <figure class="shot"><img src="img/features/stall.png" alt="Окно киоска со значками и подсказкой цен"><figcaption class="slot-label">img/features/stall.png</figcaption></figure>
+        </article>
+
+        <article class="feat is-free reveal" id="restore" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">🔄<span class="feat-num">2</span></div>
+            <div>
+              <div class="feat-title"><h3>Restore RH — вернуть плагин после очистки</h3><span class="pill free">Бесплатно</span><span class="pill new">Новое</span></div>
+              <p class="feat-desc">После обновления игры или «очистки файлов» лаунчер удаляет плагин из папки игры. Утилита Restore RH возвращает последнюю версию в один клик — без поиска файла в Telegram и на Google Drive.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li>Плагин сам кладёт утилиту в <span class="ui">Документы → RADMIR CRMP User Files</span> → <code>RH-updater.exe</code> (с версии 0.5.1).</li>
+                <li>Плагин пропал — запусти <code>RH-updater.exe</code> и нажми <span class="ui">«↻ Восстановить RH»</span>.</li>
+                <li>Если Windows спросит права администратора — разреши: они нужны только для копирования в папку игры. Потом откроется лаунчер.</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Подробнее</h4><span><a href="#faq-restore">«Плагин пропал после обновления игры»</a> во вкладке «Установка»</span></div>
+          </div>
+          <figure class="shot"><img src="img/features/restore.png" alt="Окно Restore RH с кнопкой «Восстановить RH»"><figcaption class="slot-label">img/features/restore.png</figcaption></figure>
+        </article>
+
+        <article class="feat is-free reveal" id="hotkey" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">⚙️<span class="feat-num">3</span></div>
+            <div>
+              <div class="feat-title"><h3>Своя клавиша меню</h3><span class="pill free">Бесплатно</span><span class="pill new">Новое</span></div>
+              <p class="feat-desc">Если <kbd>INSERT</kbd> неудобен или его нет на клавиатуре — назначь другую клавишу для открытия меню плагина.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li><kbd>INSERT</kbd> → <span class="ui">«Настройки»</span> → карточка <span class="ui">«Управление»</span> → кнопка у строки <span class="ui">«Клавиша открытия меню»</span>.</li>
+                <li>Нажми нужную клавишу: подойдут <kbd>F1</kbd>–<kbd>F12</kbd>, <kbd>Insert</kbd>, <kbd>Delete</kbd>, <kbd>Home</kbd>, <kbd>End</kbd>, <kbd>Page Up</kbd>, <kbd>Page Down</kbd>, <kbd>Pause</kbd>, <kbd>Scroll Lock</kbd>. <kbd>ESC</kbd> — отмена.</li>
+                <li>Вернуть как было — кнопка <span class="ui">«↺ Вернуть INSERT»</span>.</li>
+              </ul>
+            </div>
+          </div>
+          <figure class="shot"><img src="img/features/hotkey.png" alt="Настройки: клавиша открытия меню"><figcaption class="slot-label">img/features/hotkey.png</figcaption></figure>
+        </article>
+
         <article class="feat is-free reveal" id="tdo" data-toc>
           <div class="feat-top">
-            <div class="feat-icon" aria-hidden="true">📢<span class="feat-num">1</span></div>
+            <div class="feat-icon" aria-hidden="true">📢<span class="feat-num">4</span></div>
             <div>
               <div class="feat-title"><h3>Редактор TDO</h3><span class="pill free">Бесплатно</span></div>
               <p class="feat-desc">Объявления <code>/tdo</code> без ручного набора команды: цвет, приватность и длительность выставляешь мышкой и сразу видишь, как это будет выглядеть.</p>
@@ -929,7 +1059,7 @@
 
         <article class="feat is-free reveal" id="messages" data-toc>
           <div class="feat-top">
-            <div class="feat-icon" aria-hidden="true">💬<span class="feat-num">2</span></div>
+            <div class="feat-icon" aria-hidden="true">💬<span class="feat-num">5</span></div>
             <div>
               <div class="feat-title"><h3>Быстрые сообщения</h3><span class="pill free">Бесплатно</span></div>
               <p class="feat-desc">Тексты для <code>/s</code>, <code>/fb_msg</code>, <code>/fm</code> и <code>/ad</code> сохраняешь один раз — дальше отправка в один клик. <code>/s</code> — крик в чат, <code>/fb_msg</code> — чат футбольной команды, <code>/fm</code> — чат банды, <code>/ad</code> — объявление.</p>
@@ -950,7 +1080,7 @@
 
         <article class="feat is-free reveal" id="menu" data-toc>
           <div class="feat-top">
-            <div class="feat-icon" aria-hidden="true">🪪<span class="feat-num">3</span></div>
+            <div class="feat-icon" aria-hidden="true">🪪<span class="feat-num">6</span></div>
             <div>
               <div class="feat-title"><h3>Карточка в меню игры</h3><span class="pill free">Бесплатно</span></div>
               <p class="feat-desc">В <kbd>M</kbd> → «Персонаж» появляется карточка Reseller Helper: статус подписки, тариф и сколько дней осталось. Ключ можно активировать прямо отсюда.</p>
@@ -972,7 +1102,7 @@
 
         <article class="feat is-free reveal" id="chat" data-toc>
           <div class="feat-top">
-            <div class="feat-icon" aria-hidden="true">👁️<span class="feat-num">4</span></div>
+            <div class="feat-icon" aria-hidden="true">👁️<span class="feat-num">7</span></div>
             <div>
               <div class="feat-title"><h3>Скрытые сообщения в чате</h3><span class="pill free">Бесплатно</span></div>
               <p class="feat-desc">Игра прячет часть сообщений за плашками «СКРЫТО» и «УДАЛЕНО» — плагин показывает их целиком, включая облака над головой. Сообщения, которые удалил сервер, не возвращаются.</p>
@@ -991,7 +1121,7 @@
 
         <article class="feat is-free reveal" id="update" data-toc>
           <div class="feat-top">
-            <div class="feat-icon" aria-hidden="true">⬇️<span class="feat-num">5</span></div>
+            <div class="feat-icon" aria-hidden="true">⬇️<span class="feat-num">8</span></div>
             <div>
               <div class="feat-title"><h3>Обновления в один клик</h3><span class="pill free">Бесплатно</span></div>
               <p class="feat-desc">Новая версия ставится без поиска файлов: плагин сам сообщит о ней в чате и скачает по кнопке.</p>
@@ -1012,7 +1142,8 @@
         <!-- Призыв -->
         <div class="cta reveal" id="buy" data-toc>
           <h2>Открой все функции</h2>
-          <p>Telegram, скупка кейсов, AI-анализ и автоматизация работают с активным ключом. Ключ и продление — на <b>FunPay</b>.</p>
+          <p>Предметы и цены всех киосков, цены в инвентаре, Telegram, скупка кейсов, AI-анализ и автоматизация работают с активным ключом. Попробовать бесплатно 3 дня — пробный ключ в боте <a href="https://t.me/reseller_helper_radmir_bot" target="_blank" rel="noopener">@reseller_helper_radmir_bot</a>.</p>
+          <p>Ключ и продление — на <b>FunPay</b>.</p>
           <p>Когда срок закончится, новый ключ вводится так же: <b>M → «Персонаж» → «Активировать»</b> или <b>INSERT → «Ввести ключ»</b>.</p>
           <div class="cta-actions">
             <a class="btn btn-neon" id="buy-link" href="#" target="_blank" rel="noopener" hidden>Купить или продлить ключ →</a>
