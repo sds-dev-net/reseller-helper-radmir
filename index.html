@@ -260,7 +260,7 @@
     .link-row .li-label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
     .link-row .li-name { overflow-wrap: anywhere; }
 
-    /* Кнопка «Скачать» — прямая ссылка на .zip из последнего релиза GitHub */
+    /* Кнопка «Скачать» — прямая ссылка на .asi из последнего релиза GitHub (запасной вариант — .zip) */
     .dl-btn {
       display: flex; align-items: center; gap: 14px;
       padding: 14px 18px; border-radius: 14px; text-decoration: none;
@@ -920,7 +920,7 @@
             <span class="dl-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></span>
             <span class="dl-txt">
               <span class="dl-title" id="dl-title">Скачать Reseller Helper</span>
-              <span class="dl-meta" id="dl-meta">Последняя версия · архив .zip</span>
+              <span class="dl-meta" id="dl-meta">Последняя версия</span>
             </span>
           </a>
           <a class="vt-link" href="#" target="_blank" rel="noopener" hidden>
@@ -946,7 +946,7 @@
           <div class="steps">
             <div class="step">
               <div class="step-num">1</div>
-              <div class="step-content">Скачай архив кнопкой выше и распакуй его — внутри файл <code>reseller-helper-v….asi</code>.</div>
+              <div class="step-content">Скачай плагин кнопкой выше — это файл <code>reseller-helper-v….asi</code>. Не переименовывай его: по имени плагин узнаёт свою версию. Если скачался архив <code>.zip</code>, распакуй его — файл внутри.</div>
             </div>
             <div class="step">
               <div class="step-num">2</div>
@@ -1532,10 +1532,11 @@
 
   if (BUY_URL) { var b = document.getElementById('buy-link'); b.href = BUY_URL; b.hidden = false; }
 
-  // ── Кнопка «Скачать»: берём .zip из последнего релиза этого репозитория ──
+  // ── Кнопка «Скачать»: берём .asi из последнего релиза этого репозитория (нет .asi — .zip) ──
   // Без ответа API кнопки ведут на releases/latest/download/reseller-helper.zip — GitHub сам отдаёт файл из последнего релиза.
+  // У .asi в имени версия, поэтому постоянной ссылки на него нет — только через API.
   (function () {
-    var REPO = 'sds-dev-net/reseller-helper-radmir', KEY = 'rh-latest-release-2';
+    var REPO = 'sds-dev-net/reseller-helper-radmir', KEY = 'rh-latest-release-3';
     var btn = document.getElementById('dl-btn');
     var links = document.querySelectorAll('.dl-btn, .dl-link');
 
@@ -1554,7 +1555,7 @@
       links.forEach(function (a) { a.href = r.url; });
       document.querySelectorAll('.dl-ver').forEach(function (s) { s.textContent = r.tag ? ' ' + r.tag : ''; });
       document.getElementById('dl-title').textContent = 'Скачать Reseller Helper ' + r.tag;
-      document.getElementById('dl-meta').textContent = 'Архив .zip' + (r.size ? ' · ' + (r.size / 1048576).toFixed(1).replace('.', ',') + ' МБ' : '') + (r.date ? ' · от ' + r.date : '');
+      document.getElementById('dl-meta').textContent = (r.kind === 'zip' ? 'Архив .zip' : 'Файл .asi') + (r.size ? ' · ' + (r.size / 1048576).toFixed(1).replace('.', ',') + ' МБ' : '') + (r.date ? ' · от ' + r.date : '');
       // Отчёт VirusTotal — из описания релиза (строка вида «VirusTotal: 2/72 https://www.virustotal.com/gui/file/…»)
       if (r.vt) {
         var score = r.vtScore ? ' · ' + r.vtScore : '';
@@ -1587,11 +1588,17 @@
       .then(function (res) { if (!res.ok) throw 0; return res.json(); })
       .then(function (rel) {
         var assets = rel.assets || [];
-        var a = assets.filter(function (x) { return /reseller-helper.*\.zip$/i.test(x.name); })[0] ||
-                assets.filter(function (x) { return /\.zip$/i.test(x.name); })[0];
+        var a = assets.filter(function (x) { return /^reseller-helper-v[\d.]+\.asi$/i.test(x.name); })[0] ||
+                assets.filter(function (x) { return /\.asi$/i.test(x.name); })[0];
+        var kind = 'asi';
+        if (!a) {
+          kind = 'zip';
+          a = assets.filter(function (x) { return /reseller-helper.*\.zip$/i.test(x.name); })[0] ||
+              assets.filter(function (x) { return /\.zip$/i.test(x.name); })[0];
+        }
         if (!a) return;
         var d = rel.published_at ? new Date(rel.published_at) : null;
-        var r = { url: a.browser_download_url, tag: rel.tag_name || '', size: a.size,
+        var r = { url: a.browser_download_url, kind: kind, tag: rel.tag_name || '', size: a.size,
                   date: d ? d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' }) : '', t: Date.now() };
         var vt = findVT(rel.body);
         if (vt) { r.vt = vt.url; r.vtScore = vt.score; }
