@@ -1,0 +1,2148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reseller Helper — установка и возможности</title>
+  <meta name="description" content="Reseller Helper — плагин для Radmir RP: цены всех киосков и честный рынок, SMS и звонки в Telegram, AI-анализ чата, автореклама, редактор TDO.">
+  <meta property="og:title" content="Reseller Helper — плагин для Radmir RP">
+  <meta property="og:description" content="Цены всех киосков сервера, SMS и звонки в Telegram, AI-анализ чата, автореклама по расписанию.">
+  <meta name="theme-color" content="#0d1117">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <style>
+    /* ───────── Тема ─────────
+       --accent      неон для заливок (плашки, кнопки, номера шагов) — текст на нём --on-accent
+       --accent-ink  акцент для текста и ссылок (в светлой теме — тёмно-зелёный, читается на белом) */
+    :root {
+      --bg:          #f4f6f1;
+      --surface:     #ffffff;
+      --surface-2:   #f7f9f4;
+      --border:      #e1e6da;
+      --accent:      #8cf03a;
+      --accent-ink:  #3a7d10;
+      --on-accent:   #10200a;
+      --accent-soft: #eefbe2;
+      --accent-line: #b9e892;
+      --text:        #171b14;
+      --muted:       #646b5e;
+      --step-bg:     #8cf03a;
+      --step-text:   #10200a;
+      --tag-bg:      #eefbe2;
+      --tag-text:    #3a7d10;
+      --link:        #3a7d10;
+      --divider:     #e1e6da;
+      --free:        #4a6fd8;
+      --free-soft:   #ecf1ff;
+      --warn:        #a1590b;
+      --shadow:      0 1px 2px rgba(20,30,10,.04), 0 8px 24px -12px rgba(20,30,10,.18);
+      --shadow-hover:0 2px 4px rgba(20,30,10,.05), 0 16px 32px -14px rgba(40,90,10,.30);
+      color-scheme: light;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg:          #0d1117;
+        --surface:     #151a22;
+        --surface-2:   #11161d;
+        --border:      #232a35;
+        --accent:      #8cf03a;
+        --accent-ink:  #9df356;
+        --on-accent:   #0c1505;
+        --accent-soft: #17240f;
+        --accent-line: #3d6a1c;
+        --text:        #e8ecf2;
+        --muted:       #8d95a5;
+        --step-bg:     #8cf03a;
+        --step-text:   #0c1505;
+        --tag-bg:      #17240f;
+        --tag-text:    #9df356;
+        --link:        #9df356;
+        --divider:     #232a35;
+        --free:        #8eaaff;
+        --free-soft:   #172036;
+        --warn:        #f2b45a;
+        --shadow:      0 1px 2px rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.7);
+        --shadow-hover:0 2px 4px rgba(0,0,0,.3), 0 18px 36px -16px rgba(140,240,58,.22);
+        color-scheme: dark;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg:          #0d1117;
+      --surface:     #151a22;
+      --surface-2:   #11161d;
+      --border:      #232a35;
+      --accent:      #8cf03a;
+      --accent-ink:  #9df356;
+      --on-accent:   #0c1505;
+      --accent-soft: #17240f;
+      --accent-line: #3d6a1c;
+      --text:        #e8ecf2;
+      --muted:       #8d95a5;
+      --step-bg:     #8cf03a;
+      --step-text:   #0c1505;
+      --tag-bg:      #17240f;
+      --tag-text:    #9df356;
+      --link:        #9df356;
+      --divider:     #232a35;
+      --free:        #8eaaff;
+      --free-soft:   #172036;
+      --warn:        #f2b45a;
+      --shadow:      0 1px 2px rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.7);
+      --shadow-hover:0 2px 4px rgba(0,0,0,.3), 0 18px 36px -16px rgba(140,240,58,.22);
+      color-scheme: dark;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 15px;
+      padding: 40px 16px 64px;
+      overflow-x: hidden;
+    }
+    a { color: var(--link); }
+    code, kbd {
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 0.87em;
+      background: var(--accent-soft);
+      color: var(--accent-ink);
+      padding: 1px 6px;
+      border-radius: 5px;
+      white-space: nowrap;
+    }
+    code.wrap-ok { white-space: normal; overflow-wrap: anywhere; }
+    kbd { border: 1px solid var(--accent-line); border-bottom-width: 2px; font-weight: 600; }
+    .ui { font-weight: 600; color: var(--text); }   /* название кнопки/пункта меню */
+    .wrap { max-width: 1000px; margin-inline: auto; }
+
+    /* ───────── Шапка ───────── */
+    .header { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; margin-bottom: 28px; }
+    .header { position: relative; }
+    .hdr-row { display: flex; align-items: stretch; justify-content: center; gap: 10px; flex-wrap: wrap; width: 100%; }
+    /* на широком экране «Скачать» — в правом верхнем углу, вкладки остаются по центру */
+    @media (min-width: 761px) {
+      .hdr-dl { position: absolute; top: 4px; right: 0; min-height: 44px; }
+    }
+    /* узкий экран: под вкладками, той же ширины, всё по центру */
+    @media (max-width: 760px) {
+      .hdr-row { flex-direction: column; align-items: center; }
+      .hdr-dl { width: min(100%, 380px); min-height: 46px; }
+    }
+
+    /* «Скачать» всегда под рукой: в шапке и плавающей кнопкой, когда шапка ушла за экран */
+    .hdr-dl, .fab-dl {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--accent); color: var(--on-accent); text-decoration: none;
+      font-weight: 800; font-size: 14px; white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .hdr-dl svg, .fab-dl svg { width: 17px; height: 17px; flex-shrink: 0; }
+    .hdr-dl {
+      padding: 0 18px; min-height: 48px; border-radius: 14px;
+      box-shadow: 0 8px 22px -10px rgba(140,240,58,.6);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .hdr-dl:hover { transform: translateY(-1px); box-shadow: 0 12px 28px -10px rgba(140,240,58,.75); }
+    .hdr-dl:focus-visible, .fab-dl:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 3px; }
+    .fab-dl {
+      position: fixed; right: 18px; bottom: 18px; z-index: 30;
+      height: 46px; padding: 0 18px; border-radius: 14px;
+      box-shadow: 0 10px 28px -8px rgba(140,240,58,.55), 0 4px 14px rgba(0,0,0,.25);
+      opacity: 0; transform: translateY(12px) scale(.94); pointer-events: none;
+      transition: opacity .25s, transform .25s cubic-bezier(.3,.7,.2,1.3), right .25s ease;
+    }
+    body:has(.to-top.show) .fab-dl { right: 74px; }
+    .fab-dl.show { opacity: 1; transform: none; pointer-events: auto; }
+    .fab-dl.show:hover { transform: translateY(-2px); }
+    .dl-ver { font-weight: 700; opacity: .75; }
+    .brand { display: flex; align-items: center; gap: 14px; text-align: left; }
+    .logo {
+      width: 52px; height: 52px; border-radius: 15px;
+      background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; flex-shrink: 0;
+      box-shadow: 0 6px 18px -6px rgba(140,240,58,.55);
+    }
+    .brand h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.6px; line-height: 1.2; }
+    .brand .sub { font-size: 14px; color: var(--muted); }
+
+    /* ───────── Вкладки ───────── */
+    .tabs {
+      position: relative;
+      display: inline-grid; grid-template-columns: 1fr 1fr;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 4px;
+      box-shadow: var(--shadow);
+      width: min(100%, 380px);
+    }
+    .tab-thumb {
+      position: absolute; top: 4px; bottom: 4px; left: 4px;
+      width: calc(50% - 4px);
+      background: var(--accent);
+      border-radius: 10px;
+      transition: transform .35s cubic-bezier(.3,.7,.2,1);
+    }
+    .tabs[data-active="features"] .tab-thumb { transform: translateX(100%); }
+    .tab {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 14px; font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .25s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .tab:hover { color: var(--text); }
+    .tab[aria-selected="true"] { color: var(--on-accent); }
+    .tab:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
+
+    /* ───────── Панели ───────── */
+    .panel[hidden] { display: none; }
+    .panel.enter { animation: panelIn .38s cubic-bezier(.2,.7,.2,1) both; }
+    @keyframes panelIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+    .col { max-width: 660px; margin-inline: auto; display: flex; flex-direction: column; gap: 24px; }
+
+    /* Баннер */
+    .banner {
+      background: var(--accent-soft);
+      border: 1px solid var(--accent-line);
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-weight: 500;
+    }
+
+    /* Карточка */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      scroll-margin-top: 20px;
+    }
+    .card-header {
+      padding: 18px 22px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .card-header .icon { font-size: 18px; line-height: 1; }
+    .card-header h2 { font-size: 16px; font-weight: 700; }
+    .card-header .pill { margin-left: auto; }
+    .card-body { padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+    .note { font-size: 13px; color: var(--muted); }
+    .note.warn { color: var(--warn); }
+
+    /* Ссылки-кнопки */
+    .link-row {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      text-decoration: none;
+      color: var(--accent-ink);
+      font-size: 14px; font-weight: 600;
+      transition: border-color .2s, transform .2s;
+    }
+    .link-row:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .link-row .li-icon { font-size: 22px; flex-shrink: 0; }
+    .link-row .li-info { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+    .link-row .li-label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+    .link-row .li-name { overflow-wrap: anywhere; }
+
+    /* Кнопка «Скачать» — прямая ссылка на .zip из последнего релиза GitHub */
+    .dl-btn {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 18px; border-radius: 14px; text-decoration: none;
+      background: var(--accent); color: var(--on-accent);
+      box-shadow: 0 10px 26px -10px rgba(140,240,58,.65);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .dl-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 32px -10px rgba(140,240,58,.8); }
+    .dl-btn:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 3px; }
+    .dl-ico { width: 40px; height: 40px; border-radius: 11px; background: rgba(12,21,5,.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .dl-ico svg { width: 22px; height: 22px; }
+    .dl-btn:hover .dl-ico svg { animation: dlBob .7s ease-in-out infinite alternate; }
+    @keyframes dlBob { to { transform: translateY(2px); } }
+    .dl-txt { display: flex; flex-direction: column; min-width: 0; }
+    .dl-title { font-size: 16px; font-weight: 800; letter-spacing: -.2px; }
+    .dl-meta { font-size: 12.5px; font-weight: 600; opacity: .72; }
+    .vt-link {
+      display: inline-flex; align-items: center; gap: 7px; align-self: center;
+      font-size: 13px; font-weight: 600; color: var(--accent-ink); text-decoration: none;
+      padding: 4px 10px; border-radius: 8px; transition: background .2s;
+    }
+    .vt-link svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .vt-link:hover { background: var(--accent-soft); }
+    .vt-link[hidden], .vt-faq[hidden] { display: none; }
+
+    /* Шаги */
+    .steps { display: flex; flex-direction: column; }
+    .step { display: flex; gap: 14px; align-items: flex-start; padding-block: 9px; position: relative; }
+    .step:not(:last-child)::after {
+      content: ''; position: absolute; left: 16px; top: 42px; bottom: -4px;
+      width: 2px; background: var(--divider);
+    }
+    .step-num {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--step-bg); color: var(--step-text);
+      font-size: 13px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; position: relative; z-index: 1;
+    }
+    .step-content { padding-top: 6px; font-size: 14px; line-height: 1.6; min-width: 0; }
+    .step-content .note { margin-top: 4px; }
+    .ways { list-style: none; margin-top: 8px; display: flex; flex-direction: column; gap: 6px; counter-reset: way; }
+    .ways li {
+      counter-increment: way;
+      position: relative;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 12px 8px 40px;
+    }
+    .ways li::before {
+      content: counter(way);
+      position: absolute; left: 11px; top: 9px;
+      width: 20px; height: 20px; border-radius: 6px;
+      background: var(--accent-soft); color: var(--accent-ink);
+      font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ways .best { font-size: 11px; font-weight: 700; color: var(--accent-ink); text-transform: uppercase; letter-spacing: .4px; margin-left: 6px; }
+
+    /* FAQ */
+    .faq { display: flex; flex-direction: column; gap: 8px; }
+    .faq details {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: border-color .2s;
+    }
+    .faq details[open] { border-color: var(--accent-line); }
+    .faq summary {
+      list-style: none; cursor: pointer;
+      padding: 13px 44px 13px 16px;
+      font-weight: 600; font-size: 14.5px;
+      position: relative;
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after {
+      content: ''; position: absolute; right: 18px; top: 50%;
+      width: 8px; height: 8px;
+      border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted);
+      transform: translateY(-70%) rotate(45deg);
+      transition: transform .25s;
+    }
+    .faq details[open] summary::after { transform: translateY(-30%) rotate(-135deg); }
+    .faq summary:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; border-radius: 12px; }
+    .faq .answer { padding: 0 16px 14px; font-size: 14px; display: flex; flex-direction: column; gap: 8px; }
+    .faq .answer ol, .faq .answer ul { padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+
+    .footer { text-align: center; color: var(--muted); font-size: 13px; padding-top: 8px; }
+    .footer strong { color: var(--text); }
+
+    /* ───────── Возможности ───────── */
+    .features-layout {
+      display: grid;
+      grid-template-columns: 236px minmax(0, 1fr);
+      gap: 36px;
+      align-items: start;
+    }
+    .features-main { display: flex; flex-direction: column; gap: 22px; min-width: 0; max-width: 700px; }
+
+    /* Оглавление */
+    .toc {
+      position: sticky; top: 20px;
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+    .toc-list { position: relative; list-style: none; display: flex; flex-direction: column; gap: 2px; padding: 2px; }
+    .toc-ind-wrap { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+    .toc-group {
+      font-size: 11px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase;
+      color: var(--muted); padding: 14px 10px 6px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .toc-group:first-child { padding-top: 0; }
+    .toc-ind {
+      position: absolute; left: 0; top: 0;
+      width: 0; height: 0;
+      background: var(--accent-soft);
+      border-radius: 9px;
+      box-shadow: inset 3px 0 0 var(--accent);
+      transition: transform .35s cubic-bezier(.3,.7,.2,1), width .35s cubic-bezier(.3,.7,.2,1), height .35s cubic-bezier(.3,.7,.2,1), opacity .2s;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .toc a {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; gap: 9px;
+      padding: 7px 10px 7px 12px;
+      border-radius: 9px;
+      font-size: 13.5px; font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+      white-space: nowrap;
+    }
+    .toc a:hover { color: var(--text); }
+    .toc a.active { color: var(--text); font-weight: 600; }
+    .toc a:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: -2px; }
+    .toc .n {
+      font-size: 11px; font-weight: 700; color: var(--muted);
+      min-width: 16px; text-align: right; font-variant-numeric: tabular-nums;
+    }
+    .toc a.active .n { color: var(--accent-ink); }
+    .toc .t { overflow: hidden; text-overflow: ellipsis; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .dot.paid { background: var(--accent); }
+    .dot.free { background: var(--free); }
+
+    /* Плашки */
+    .pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 999px;
+      font-size: 12px; font-weight: 700; letter-spacing: .2px;
+      white-space: nowrap;
+    }
+    .pill.paid { background: var(--accent); color: var(--on-accent); }
+    .pill.free { background: var(--free-soft); color: var(--free); }
+    .pill.new  { background: transparent; color: var(--warn); box-shadow: inset 0 0 0 1.5px currentColor; padding: 2px 9px; }
+
+    /* Заголовки блоков */
+    .block-head {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      padding-top: 10px;
+      scroll-margin-top: 20px;
+    }
+    .block-head h2 { font-size: 22px; font-weight: 800; letter-spacing: -.4px; }
+    .block-head p { flex-basis: 100%; color: var(--muted); font-size: 14px; }
+
+    /* Карточка функции */
+    .feat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 22px;
+      box-shadow: var(--shadow);
+      scroll-margin-top: 20px;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .feat:hover, .js .feat.in:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: var(--accent-line); }
+    .feat-top { display: flex; align-items: flex-start; gap: 14px; }
+    .feat-icon {
+      position: relative;
+      width: 46px; height: 46px; border-radius: 13px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; flex-shrink: 0;
+      background: var(--accent-soft);
+      transition: transform .3s cubic-bezier(.3,.7,.2,1.4);
+    }
+    .feat.is-free .feat-icon { background: var(--free-soft); }
+    .feat:hover .feat-icon { transform: rotate(-6deg) scale(1.06); }
+    .feat-num {
+      position: absolute; right: -6px; bottom: -6px;
+      min-width: 20px; height: 20px; padding: 0 5px; border-radius: 7px;
+      background: var(--surface); border: 1px solid var(--border);
+      font-size: 11px; font-weight: 800; color: var(--muted);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .feat-title { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding-top: 2px; min-width: 0; }
+    .feat-title h3 { font-size: 17.5px; font-weight: 700; letter-spacing: -.2px; line-height: 1.3; }
+    .feat-desc { margin-top: 6px; color: var(--text); font-size: 14.5px; }
+    .feat-body { margin-top: 14px; display: flex; flex-direction: column; gap: 12px; }
+    .howto h4, .where h4 {
+      font-size: 11px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 6px;
+    }
+    .howto ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .howto li { position: relative; padding-left: 20px; font-size: 14px; }
+    .howto li::before {
+      content: ''; position: absolute; left: 3px; top: .62em;
+      width: 7px; height: 7px; border-radius: 2px;
+      background: var(--accent); transform: rotate(45deg);
+    }
+    .feat.is-free .howto li::before { background: var(--free); }
+    .where {
+      display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap;
+      background: var(--surface-2);
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-size: 13.5px;
+    }
+    .where h4 { margin: 0; }
+
+    /* ───────── Скриншоты: одна картинка или галерея с миниатюрами, клик — на весь экран ───────── */
+    .shot { margin-top: 16px; }
+    .shot-stage {
+      position: relative; display: block; width: 100%;
+      padding: 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+      background: #0b0f14; cursor: zoom-in; font: inherit; color: inherit;
+    }
+    .shot-stage:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
+    .shot-stage img { display: block; width: 100%; height: auto; }
+    .shot.multi .shot-stage { aspect-ratio: 16 / 10; }
+    .shot.multi .shot-stage img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+      opacity: 0; transform: scale(1.02); transition: opacity .35s ease, transform .5s ease;
+    }
+    .shot.multi .shot-stage img.on { opacity: 1; transform: none; }
+    .shot-zoom {
+      position: absolute; right: 10px; top: 10px; z-index: 2;
+      width: 34px; height: 34px; border-radius: 10px;
+      background: rgba(13,17,23,.72); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: scale(.9); transition: opacity .2s, transform .2s;
+      -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    }
+    .shot-zoom svg { width: 17px; height: 17px; }
+    .shot-stage:hover .shot-zoom, .shot-stage:focus-visible .shot-zoom { opacity: 1; transform: none; }
+    @media (hover: none) { .shot-zoom { opacity: 1; transform: none; } }
+    .shot-cap { margin-top: 8px; font-size: 13px; color: var(--muted); display: flex; gap: 8px; align-items: baseline; }
+    .shot-cap .cnt { flex-shrink: 0; font-weight: 700; color: var(--accent-ink); font-variant-numeric: tabular-nums; }
+    .shot-thumbs { display: flex; gap: 8px; margin-top: 10px; overflow-x: auto; scrollbar-width: none; padding: 2px; }
+    .shot-thumbs::-webkit-scrollbar { display: none; }
+    .shot-thumb {
+      flex: 0 0 auto; width: 96px; height: 60px; padding: 0;
+      border-radius: 9px; overflow: hidden; cursor: pointer;
+      border: 2px solid var(--border); background: #0b0f14;
+      opacity: .65; transition: opacity .2s, border-color .2s, transform .2s;
+    }
+    .shot-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
+    .shot-thumb:hover { opacity: 1; transform: translateY(-1px); }
+    .shot-thumb[aria-current="true"] { opacity: 1; border-color: var(--accent); }
+    .shot-thumb:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
+
+    /* Просмотр на весь экран */
+    .lb {
+      position: fixed; inset: 0; z-index: 100;
+      background: rgba(5,8,12,.97);
+      -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 60px 64px 28px;
+      opacity: 0; visibility: hidden; transition: opacity .25s, visibility 0s .25s;
+    }
+    .lb.open { opacity: 1; visibility: visible; transition: opacity .25s; }
+    .lb-img {
+      max-width: min(1500px, 100%); max-height: calc(100vh - 150px); max-height: calc(100dvh - 150px);
+      border-radius: 10px; box-shadow: 0 30px 80px -20px rgba(0,0,0,.8);
+      transform: scale(.97); transition: transform .3s cubic-bezier(.2,.7,.2,1);
+      touch-action: pan-y; user-select: none; -webkit-user-drag: none;
+    }
+    .lb.open .lb-img { transform: none; }
+    .lb-cap { color: #c9d1d9; font-size: 14px; margin-top: 14px; text-align: center; max-width: 720px; }
+    .lb-cap .cnt { color: #9df356; font-weight: 700; margin-right: 8px; }
+    .lb-btn {
+      position: absolute; width: 44px; height: 44px; border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.07); color: #fff;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+      transition: background .2s, border-color .2s;
+    }
+    .lb-btn:hover { background: rgba(140,240,58,.16); border-color: rgba(140,240,58,.5); }
+    .lb-btn:focus-visible { outline: 2px solid #9df356; outline-offset: 2px; }
+    .lb-btn svg { width: 20px; height: 20px; }
+    .lb-close { top: 12px; right: 12px; }
+    .lb-prev { left: 12px; top: 50%; transform: translateY(-50%); }
+    .lb-next { right: 12px; top: 50%; transform: translateY(-50%); }
+    .lb.single .lb-prev, .lb.single .lb-next { display: none; }
+
+    /* ───────── Витрина «Что умеет плагин» ───────── */
+    .showcase {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 18px;
+      box-shadow: var(--shadow); overflow: hidden; scroll-margin-top: 20px;
+    }
+    .sc-head { padding: 18px 20px 12px; }
+    .sc-head h2 { font-size: 20px; font-weight: 800; letter-spacing: -.3px; }
+    .sc-head p { color: var(--muted); font-size: 14px; margin-top: 2px; }
+    .sc-tabs { display: flex; gap: 6px; padding: 0 20px 14px; overflow-x: auto; scrollbar-width: none;
+      -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent); }
+    .sc-tabs.end { -webkit-mask-image: none; mask-image: none; }
+    .sc-tabs::-webkit-scrollbar { display: none; }
+    .sc-tab {
+      position: relative; overflow: hidden; flex: 0 0 auto;
+      display: flex; align-items: center; gap: 7px;
+      padding: 8px 12px; border-radius: 10px;
+      border: 1px solid var(--border); background: var(--surface-2);
+      color: var(--muted); font: 600 13px/1.2 'Inter', system-ui, sans-serif; cursor: pointer;
+      transition: color .2s, border-color .2s, background .2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .sc-tab:hover { color: var(--text); }
+    .sc-tab[aria-selected="true"] { color: var(--text); border-color: var(--accent-line); background: var(--accent-soft); }
+    .sc-tab:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
+    .sc-bar { position: absolute; left: 0; bottom: 0; height: 2px; width: 0; background: var(--accent); }
+    .sc-tab[aria-selected="true"] .sc-bar { animation: scBar var(--sc-dur, 6s) linear forwards; }
+    .showcase.paused .sc-bar { animation-play-state: paused !important; }
+    .showcase.static .sc-bar { display: none; }
+    @keyframes scBar { to { width: 100%; } }
+    .sc-stage { position: relative; aspect-ratio: 16 / 10; background: #0b0f14; border-block: 1px solid var(--border); overflow: hidden; touch-action: pan-y; }
+    .sc-slide {
+      position: absolute; inset: 0; opacity: 0; visibility: hidden;
+      transform: scale(1.02); transition: opacity .45s ease, transform .7s cubic-bezier(.2,.7,.2,1), visibility 0s .45s;
+    }
+    .sc-slide.on { opacity: 1; visibility: visible; transform: none; transition: opacity .45s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+    .sc-slide > img { width: 100%; height: 100%; object-fit: contain; display: block; cursor: zoom-in; }
+    .sc-slide.tg-slide { display: flex; align-items: stretch; justify-content: center; padding: 14px; background: radial-gradient(120% 90% at 50% 0%, #17283a 0%, #0b0f14 70%); }
+    .sc-info { display: flex; align-items: center; gap: 14px; padding: 14px 20px; }
+    .sc-txt { flex: 1; min-width: 0; }
+    .sc-txt b { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 15.5px; }
+    .sc-txt .d { display: block; font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+    .sc-more {
+      flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 14px; border-radius: 10px; text-decoration: none;
+      background: var(--accent); color: var(--on-accent); font-weight: 700; font-size: 13.5px;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .sc-more:hover { transform: translateY(-1px); box-shadow: 0 8px 20px -8px rgba(140,240,58,.6); }
+
+    /* ───────── Живые примеры (Telegram, AI-чат, очередь) ───────── */
+    .demo {
+      margin-top: 16px; position: relative;
+      border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+      background: #0b0f14; color: #e9edf2;
+    }
+    .demo-bar {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      padding: 8px 10px 8px 12px; font-size: 12px; color: #8d95a5;
+      background: #10151c; border-bottom: 1px solid #1d2430;
+    }
+    .demo-live { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 10.5px; letter-spacing: .5px; text-transform: uppercase; color: #9df356; }
+    .demo-live::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #8cf03a; animation: livePulse 1.6s infinite; }
+    @keyframes livePulse { 0% { box-shadow: 0 0 0 0 rgba(140,240,58,.6); } 70% { box-shadow: 0 0 0 7px rgba(140,240,58,0); } 100% { box-shadow: 0 0 0 0 rgba(140,240,58,0); } }
+    .demo-ctl { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
+    .demo-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 10px; border-radius: 8px; cursor: pointer;
+      border: 1px solid #2a3340; background: #151b24; color: #c9d1d9;
+      font: 600 12px/1.2 'Inter', system-ui, sans-serif;
+      transition: border-color .2s, background .2s, color .2s, opacity .2s;
+    }
+    .demo-btn:hover { border-color: #3d6a1c; color: #fff; }
+    .demo-btn:focus-visible { outline: 2px solid #9df356; outline-offset: 2px; }
+    .demo-btn[aria-pressed="false"] { opacity: .5; }
+    .demo-btn[aria-pressed="false"] .lbl { text-decoration: line-through; }
+    .demo-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
+    .demo-note { padding: 7px 12px; font-size: 11.5px; color: #6f7888; border-top: 1px solid #1d2430; background: #0d1218; }
+
+    /* Чат игры */
+    .game {
+      position: relative; overflow: hidden; min-height: 150px;
+      background:
+        linear-gradient(180deg, rgba(8,10,14,.25), rgba(8,10,14,.75)),
+        radial-gradient(90% 70% at 80% 100%, #3b2a1a 0%, transparent 60%),
+        radial-gradient(70% 60% at 15% 20%, #1d3550 0%, transparent 65%),
+        linear-gradient(160deg, #24324a 0%, #151d2a 55%, #1b1712 100%);
+    }
+    .game-lbl { position: absolute; left: 10px; top: 8px; font-size: 10.5px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: rgba(255,255,255,.45); }
+    .game-chat {
+      position: absolute; left: 0; right: 0; bottom: 0; top: 26px;
+      display: flex; flex-direction: column; justify-content: flex-end; gap: 1px;
+      padding: 8px 10px 10px; overflow: hidden;
+    }
+    .gl {
+      flex-shrink: 0;
+      font: 700 12.5px/1.42 Arial, 'Helvetica Neue', sans-serif; color: #fff;
+      text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 1px 2px rgba(0,0,0,.6);
+      animation: glIn .3s ease both; overflow-wrap: anywhere;
+    }
+    @keyframes glIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    .tag { display: inline-block; margin-right: 5px; }
+    .tag.pop { animation: tagPop .45s cubic-bezier(.3,.7,.2,1.6) both; }
+    @keyframes tagPop { from { opacity: 0; transform: scale(.3); } to { opacity: 1; transform: none; } }
+    .tg-s { color: #FF4444; } .tg-b { color: #44AAFF; }
+    .ai-demo .game { height: 250px; }
+    .ai-demo.no-s .tag.s, .ai-demo.no-b .tag.b { display: none; }
+    .ai-scan { display: inline-block; margin-right: 5px; color: #9df356; font-size: 11px; animation: scan .5s ease-in-out infinite alternate; }
+    @keyframes scan { from { opacity: .3; } to { opacity: 1; } }
+
+    /* Telegram */
+    .tgw { display: flex; flex-direction: column; background: #0e1621; min-width: 0; min-height: 0; }
+    .tg-head { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: #17212b; border-bottom: 1px solid #0b121a; }
+    .tg-ava { width: 32px; height: 32px; border-radius: 50%; background: #8cf03a; color: #0c1505; font: 800 12px/32px 'Inter', sans-serif; text-align: center; flex-shrink: 0; }
+    .tg-name { font-size: 13.5px; font-weight: 600; color: #fff; line-height: 1.2; }
+    .tg-sub { font-size: 11.5px; color: #6d8299; }
+    .tg-msgs {
+      flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px;
+      padding: 10px; overflow: hidden;
+      background: #0e1621 radial-gradient(circle at 20% 30%, rgba(80,120,160,.08) 0 2px, transparent 3px) 0 0 / 26px 26px;
+    }
+    .tgm {
+      flex-shrink: 0; align-self: flex-start; max-width: 90%;
+      background: #182533; color: #f1f4f7; border-radius: 12px 12px 12px 4px;
+      padding: 6px 10px 5px; font-size: 12.8px; line-height: 1.45;
+      animation: tgIn .32s cubic-bezier(.2,.7,.2,1) both; overflow-wrap: anywhere;
+    }
+    .tgm.out { align-self: flex-end; background: #2b5278; border-radius: 12px 12px 4px 12px; }
+    .tgm.glow { box-shadow: 0 0 0 1px rgba(140,240,58,.6), 0 0 22px -4px rgba(140,240,58,.55); }
+    .tgm .tm { float: right; font-size: 10.5px; color: #7f91a4; margin: 7px 0 -3px 10px; }
+    .tgm.out .tm { color: #9cc0e2; }
+    .tgm code { font: 12px/1.3 Menlo, Consolas, monospace; color: #8fd0ff; background: none; border: 0; padding: 0; white-space: normal; }
+    .tgkb { display: block; margin-top: 5px; }
+    .tgkb span {
+      display: block; text-align: center; padding: 6px 8px; border-radius: 8px;
+      background: rgba(255,255,255,.08); color: #e6edf3; font-size: 12.5px; font-weight: 600;
+      transition: background .2s, transform .15s;
+    }
+    .tgkb span.press { background: rgba(110,170,255,.38); transform: scale(.97); }
+    .tg-in { display: flex; align-items: center; gap: 8px; padding: 8px 10px; background: #17212b; border-top: 1px solid #0b121a; font-size: 12.8px; color: #6d7f8f; min-height: 38px; }
+    .tg-in .txt { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .tg-in .txt.typing { color: #f1f4f7; }
+    .tg-in .txt.typing::after { content: ''; display: inline-block; width: 1px; height: 14px; background: #8fd0ff; margin-left: 1px; vertical-align: -2px; animation: caret .8s steps(1) infinite; }
+    @keyframes caret { 50% { opacity: 0; } }
+    .tg-send { width: 22px; height: 22px; color: #5288c1; opacity: .35; transition: opacity .2s; flex-shrink: 0; }
+    .tg-send.on { opacity: 1; }
+    @keyframes tgIn { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: none; } }
+    .tg-demo .demo-grid { height: 380px; }
+    .tg-demo .game, .q-demo .qbox { border-right: 1px solid #1d2430; }
+    .tg-slide .tgw { width: min(100%, 440px); border-radius: 12px; overflow: hidden; box-shadow: 0 20px 50px -20px rgba(0,0,0,.8); }
+
+    /* Очередь */
+    .q-demo .demo-grid { height: 240px; }
+    .qbox {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 16px; text-align: center;
+      background: radial-gradient(80% 80% at 50% 0%, #182a14 0%, #0b0f14 70%);
+    }
+    .q-lbl { font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #8d95a5; }
+    .q-num { font-size: 56px; font-weight: 800; letter-spacing: -2px; line-height: 1.05; color: #fff; font-variant-numeric: tabular-nums; transition: color .3s, text-shadow .3s; }
+    .q-num.hit { color: #9df356; text-shadow: 0 0 24px rgba(140,240,58,.45); }
+    .q-set { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 12.5px; color: #c9d1d9; white-space: nowrap; justify-content: center; }
+    .q-set input[type=range] { width: 120px; accent-color: #8cf03a; }
+    .q-set output { min-width: 26px; font-weight: 800; color: #9df356; font-variant-numeric: tabular-nums; }
+
+    /* Как открыть меню */
+    .intro {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 22px;
+      box-shadow: var(--shadow);
+      scroll-margin-top: 20px;
+    }
+    .intro h2 { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+    .open-ways { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .open-way {
+      background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px;
+      padding: 10px 12px; font-size: 13.5px; display: flex; flex-direction: column; gap: 6px;
+    }
+    .open-way .key { font-size: 15px; }
+    .intro .note { margin-top: 10px; }
+
+    /* Призыв */
+    .cta {
+      position: relative; overflow: hidden;
+      border-radius: 18px;
+      padding: 26px 24px;
+      background: #0f1509;
+      color: #eef6e6;
+      border: 1px solid #2c4419;
+      scroll-margin-top: 20px;
+    }
+    .cta::before {
+      content: ''; position: absolute; inset: -40% -10% auto auto;
+      width: 320px; height: 320px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(140,240,58,.35), rgba(140,240,58,0) 65%);
+      pointer-events: none;
+    }
+    .cta h2 { position: relative; font-size: 22px; font-weight: 800; letter-spacing: -.4px; }
+    .cta p { position: relative; margin-top: 8px; color: #b8c6ab; font-size: 14.5px; max-width: 520px; }
+    .cta p b { color: #eef6e6; }
+    .cta-actions { position: relative; display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 18px; border-radius: 12px;
+      font-weight: 700; font-size: 14px; text-decoration: none;
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+    .btn-neon { background: #8cf03a; color: #0c1505; box-shadow: 0 8px 22px -8px rgba(140,240,58,.6); }
+    .btn-neon:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -8px rgba(140,240,58,.75); }
+    .btn-ghost { color: #dfeed2; border: 1px solid #3a5524; }
+    .btn-ghost:hover { background: rgba(140,240,58,.08); transform: translateY(-2px); }
+    .btn[hidden] { display: none; }
+
+    /* Кнопка «наверх» */
+    .to-top {
+      position: fixed; right: 18px; bottom: 18px; z-index: 30;
+      width: 46px; height: 46px; border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: var(--shadow-hover);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      opacity: 0; transform: translateY(12px) scale(.9); pointer-events: none;
+      transition: opacity .25s, transform .25s, border-color .2s;
+    }
+    .to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+    .to-top:hover { border-color: var(--accent); }
+    .to-top svg { width: 18px; height: 18px; }
+
+    /* Появление при прокрутке (только с JS) */
+    .js .reveal { opacity: 0; transform: translateY(16px); }
+    .js .reveal.in {
+      opacity: 1; transform: none;
+      transition: opacity .55s ease var(--d, 0ms), transform .55s cubic-bezier(.2,.7,.2,1) var(--d, 0ms);
+    }
+    /* после появления hover-анимация работает без задержки */
+    .js .feat.reveal.in.settled { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+
+    /* ───────── Телефон / узкие экраны ───────── */
+    @media (max-width: 900px) {
+      body { padding-top: 28px; }
+      .features-layout { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+      .features-main { max-width: none; }
+      .toc {
+        top: 0; z-index: 20;
+        max-height: none;
+        overflow-x: auto; overflow-y: hidden;
+        margin-inline: -16px;
+        padding: 10px 16px;
+        background: var(--bg);
+        background: color-mix(in srgb, var(--bg) 88%, transparent);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+        scrollbar-width: none;
+      }
+      .toc::-webkit-scrollbar { display: none; }
+      .toc-list { flex-direction: row; gap: 6px; width: max-content; }
+      .toc-group { display: none; }
+      .toc a {
+        padding: 7px 12px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        border-radius: 999px;
+        font-size: 13px;
+      }
+      .toc a.active { border-color: transparent; background: transparent; }
+      .toc-ind { box-shadow: none; background: var(--accent); border-radius: 999px; }
+      .toc a.active, .toc a.active .n { color: var(--on-accent); }
+      .toc a.active .dot { background: var(--on-accent); }
+      .feat, .block-head, .intro, .cta { scroll-margin-top: 70px; }
+    }
+    @media (max-width: 560px) {
+      body { font-size: 14.5px; }
+      .brand h1 { font-size: 23px; }
+      .card-header, .card-body { padding-inline: 16px; }
+      .feat, .intro { padding: 16px; }
+      .feat-top { gap: 12px; }
+      .feat-icon { width: 42px; height: 42px; font-size: 20px; }
+      .feat-title h3 { font-size: 16.5px; }
+      /* описание — на всю ширину карточки, под иконкой и заголовком */
+      .feat-top { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 12px; }
+      .feat-top > div:not(.feat-icon) { display: contents; }
+      .feat-desc { grid-column: 1 / -1; margin-top: 12px; }
+      .open-ways { grid-template-columns: minmax(0, 1fr); }
+      .open-way { flex-direction: row; align-items: center; gap: 10px; }
+      .cta { padding: 22px 18px; }
+      .to-top { right: 12px; bottom: 12px; }
+      .tabs { width: 100%; }
+      .hdr-dl { width: 100%; min-height: 46px; }
+      .fab-dl { right: 12px; bottom: 12px; }
+      body:has(.to-top.show) .fab-dl { right: 66px; }
+    }
+
+    @media (max-width: 640px) {
+      .demo-grid { grid-template-columns: minmax(0, 1fr); }
+      .tg-demo .demo-grid { height: auto; grid-template-rows: 118px 370px; }
+      .q-demo .demo-grid { height: auto; grid-template-rows: auto 150px; }
+      .tg-demo .game, .q-demo .qbox { border-right: 0; border-bottom: 1px solid #1d2430; }
+      .ai-demo .game { height: 290px; }
+      .gl { font-size: 12px; }
+      .sc-stage { aspect-ratio: 4 / 3; }
+      .sc-info { flex-wrap: wrap; padding: 12px 16px 16px; }
+      .sc-more { width: 100%; justify-content: center; }
+      .sc-head { padding: 16px 16px 10px; }
+      .sc-tabs { padding: 0 16px 12px; }
+      .lb { padding: 56px 8px 84px; }
+      .lb-prev, .lb-next { top: auto; bottom: 18px; transform: none; }
+      .lb-prev { left: calc(50% - 54px); }
+      .lb-next { right: calc(50% - 54px); }
+      .shot-thumb { width: 80px; height: 52px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .js .reveal { opacity: 1; transform: none; }
+      .feat:hover, .js .feat.in:hover, .feat:hover .feat-icon, .link-row:hover, .btn:hover { transform: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Шапка -->
+  <header class="header">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">🛒</div>
+      <div>
+        <h1>Reseller Helper</h1>
+        <div class="sub">Плагин для Radmir RP</div>
+      </div>
+    </div>
+    <div class="hdr-row">
+      <nav class="tabs" role="tablist" aria-label="Разделы" data-active="install">
+        <span class="tab-thumb" aria-hidden="true"></span>
+        <a class="tab" role="tab" id="tab-install" href="#install" aria-controls="panel-install" aria-selected="true">🔧 Установка</a>
+        <a class="tab" role="tab" id="tab-features" href="#features" aria-controls="panel-features" aria-selected="false">✨ Возможности</a>
+      </nav>
+      <a class="hdr-dl dl-link" href="https://github.com/sds-dev-net/reseller-helper-radmir/releases/latest/download/reseller-helper.zip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+        Скачать<span class="dl-ver"></span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ═════════════ ВКЛАДКА «УСТАНОВКА» ═════════════ -->
+  <section class="panel" id="panel-install" role="tabpanel" aria-labelledby="tab-install">
+    <div class="col">
+
+      <div class="banner reveal">🎉 Спасибо за покупку! Добро пожаловать в Reseller Helper.</div>
+
+      <!-- Скачать -->
+      <div class="card reveal" id="download">
+        <div class="card-header"><span class="icon">📥</span><h2>Скачать плагин</h2></div>
+        <div class="card-body">
+          <a class="dl-btn" id="dl-btn" href="https://github.com/sds-dev-net/reseller-helper-radmir/releases/latest/download/reseller-helper.zip">
+            <span class="dl-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></span>
+            <span class="dl-txt">
+              <span class="dl-title" id="dl-title">Скачать Reseller Helper</span>
+              <span class="dl-meta" id="dl-meta">Последняя версия · архив .zip</span>
+            </span>
+          </a>
+          <a class="vt-link" href="#" target="_blank" rel="noopener" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>
+            <span class="vt-txt">Проверка файла на VirusTotal</span><span aria-hidden="true">→</span>
+          </a>
+          <a class="link-row"
+             href="https://drive.google.com/drive/folders/1YSoB1tUZCwM6XsDSWRnuG4-AX45DZQIi?usp=sharing"
+             target="_blank" rel="noopener">
+            <span class="li-icon">📁</span>
+            <span class="li-info">
+              <span class="li-label">Запасная ссылка</span>
+              <span class="li-name">Папка на Google Drive</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Установка -->
+      <div class="card reveal" id="setup">
+        <div class="card-header"><span class="icon">🔧</span><h2>Установка</h2></div>
+        <div class="card-body">
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-content">Скачай архив кнопкой выше и распакуй его — внутри файл <code>reseller-helper-v….asi</code>.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                Закинь его в папку с игрой — туда, где лежит <code>GTA_SA.exe</code>.
+                <div class="note warn">⚠️ Не переименовывай файл — это сломает автообновление (<a href="#faq-rename">почему</a>).</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-content">
+                Запусти игру. Когда зайдёшь на сервер, в чате появится <code>[Reseller Helper] Plg OK</code> — плагин работает.
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-content">
+                Активируй ключ — любым способом:
+                <ol class="ways">
+                  <li>
+                    <kbd>M</kbd> → <span class="ui">«Персонаж»</span> → карточка <span class="ui">Reseller Helper</span> → <span class="ui">«Активировать»</span>. Нажми <span class="ui">«Вставить»</span> и <span class="ui">«Активировать»</span>.<span class="best">удобнее всего</span>
+                  </li>
+                  <li>Нажми <kbd>INSERT</kbd> — откроется меню плагина — пункт <span class="ui">«Ввести ключ»</span>.</li>
+                  <li>Введи в игровой чат: <code class="wrap-ok">/rh_activate RHLP-XXXX-XXXX-XXXX</code></li>
+                </ol>
+                <div class="note">⏱ Срок действия начинается с первой активации. Ключ привязывается к этому компьютеру.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">5</div>
+              <div class="step-content">
+                Готово! Меню плагина — <kbd>INSERT</kbd> (клавишу можно сменить: <a href="#hotkey">как</a>), команда <code>/rh</code> или клик по карточке в <kbd>M</kbd> → «Персонаж».
+                Что умеет плагин — во вкладке <a href="#features">«Возможности»</a>.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Telegram -->
+      <div class="card reveal" id="tg">
+        <div class="card-header">
+          <span class="icon">🤖</span><h2>Подключить Telegram</h2>
+          <span class="pill paid">Платно</span>
+        </div>
+        <div class="card-body">
+          <a class="link-row" href="https://t.me/reseller_helper_radmir_bot" target="_blank" rel="noopener">
+            <span class="li-icon">🤖</span>
+            <span class="li-info">
+              <span class="li-label">Бот для уведомлений</span>
+              <span class="li-name">@reseller_helper_radmir_bot</span>
+            </span>
+          </a>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-content">Открой бота по ссылке выше и нажми <span class="ui">«Запустить»</span> (или отправь <code>/start</code>).</div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-content">В игре: <kbd>INSERT</kbd> → <span class="ui">«Telegram»</span> → в поле <span class="ui">«Ваш Telegram ник»</span> впиши свой ник, например <code>@ivan_reseller</code>.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-content">
+                Нажми <span class="ui">«Проверить соединение»</span>. Должно появиться «Telegram подключён!», а бот пришлёт сообщение.
+                <div class="note">Ошибка 404 — значит, боту ещё не отправлен <code>/start</code>.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-content">Там же включи уведомления: о новых SMS и звонках и, если нужно, о месте в очереди.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Частые вопросы -->
+      <div class="card reveal" id="faq">
+        <div class="card-header"><span class="icon">💬</span><h2>Частые вопросы</h2></div>
+        <div class="card-body">
+          <div class="faq">
+            <details id="faq-restore">
+              <summary>Плагин пропал после обновления игры или очистки файлов</summary>
+              <div class="answer">
+                <p>Лаунчер Radmir при обновлении и «очистке файлов» удаляет из папки игры всё лишнее — и файл плагина тоже. Скачивать его вручную не нужно: верни плагин утилитой <b>Restore RH</b>.</p>
+                <ol>
+                  <li>Открой <span class="ui">Документы</span> → <span class="ui">RADMIR CRMP User Files</span> и запусти <code>RH-updater.exe</code>.</li>
+                  <li>Нажми <span class="ui">«↻ Восстановить RH»</span> — скачается последняя версия плагина. Если Windows спросит права администратора, разреши: они нужны только чтобы положить файл в папку игры.</li>
+                  <li>Откроется лаунчер — запускай игру как обычно.</li>
+                </ol>
+                <p class="note">Утилиту плагин кладёт в эту папку сам при входе в игру, начиная с версии 0.5.1, и держит её свежей. Если её там нет — скачай плагин заново по <a href="#setup">ссылке выше</a>.</p>
+              </div>
+            </details>
+            <details id="faq-antivirus">
+              <summary>Антивирус удалил или блокирует файл</summary>
+              <div class="answer">
+                <p>Плагин встраивается в игру — так работают все <code>.asi</code>-моды, поэтому антивирус иногда принимает его за подозрительный файл. Если Windows Defender удалил плагин:</p>
+                <ol>
+                  <li>Открой <span class="ui">«Безопасность Windows»</span> → <span class="ui">«Защита от вирусов и угроз»</span> → <span class="ui">«Журнал защиты»</span>.</li>
+                  <li>Найди запись с <code>reseller-helper</code> → <span class="ui">«Действия»</span> → <span class="ui">«Восстановить»</span> или <span class="ui">«Разрешить на устройстве»</span>.</li>
+                  <li>Чтобы это не повторялось, добавь файл в исключения: <span class="ui">«Управление настройками»</span> → <span class="ui">«Исключения»</span> → <span class="ui">«Добавить исключение»</span> → <span class="ui">«Файл»</span>.</li>
+                </ol>
+                <p class="vt-faq" hidden>🛡 Посмотри сам, что говорят о файле 70+ антивирусов: <a class="vt-faq-link" href="#" target="_blank" rel="noopener">отчёт VirusTotal</a>.</p>
+                <p class="note">Скачивай плагин только по ссылке с этой страницы.</p>
+              </div>
+            </details>
+            <details id="faq-pc">
+              <summary>Сменил компьютер — ключ не активируется</summary>
+              <div class="answer">
+                <p>Ключ привязан к компьютеру, на котором его активировали. На другом ПК появится «Лицензия привязана к другому ПК — обратитесь в поддержку».</p>
+                <p>Напиши продавцу в чат заказа на FunPay — привязку сбросят, и ключ можно будет активировать на новом компьютере. Оставшийся срок сохранится.</p>
+              </div>
+            </details>
+            <details id="faq-update">
+              <summary>Как обновить плагин</summary>
+              <div class="answer">
+                <p>Скачивать файл заново не нужно. Когда выйдет новая версия, в чате появится «Доступно обновление».</p>
+                <ol>
+                  <li>Нажми <kbd>INSERT</kbd> и кнопку <span class="ui">«Обновить до v…»</span> внизу меню (или введи <code>/rh_update</code>).</li>
+                  <li>Дождись сообщения «Обновление загружено!» и перезапусти игру.</li>
+                </ol>
+                <p class="note">Старый файл можно не удалять — он не мешает новой версии.</p>
+              </div>
+            </details>
+            <details id="faq-rename">
+              <summary>Почему нельзя переименовывать файл</summary>
+              <div class="answer">
+                <p>Плагин узнаёт свою версию по имени файла — <code>reseller-helper-v1.2.3.asi</code>. Обновление скачивается рядом со старым файлом, и при запуске игры старая версия уступает место новой, сравнивая имена.</p>
+                <p>Если файл переименовать, плагин не поймёт, какая версия новее, и обновления перестанут ставиться правильно.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer"><strong>Удачных продаж!</strong> 💰</div>
+    </div>
+  </section>
+
+  <!-- ═════════════ ВКЛАДКА «ВОЗМОЖНОСТИ» ═════════════ -->
+  <section class="panel" id="panel-features" role="tabpanel" aria-labelledby="tab-features" hidden>
+    <div class="features-layout">
+
+      <!-- Оглавление -->
+      <nav class="toc" aria-label="Оглавление">
+        <ol class="toc-list" id="toc-list">
+          <li class="toc-ind-wrap" aria-hidden="true"><span class="toc-ind" id="toc-ind"></span></li>
+          <li><a href="#open"><span class="n">→</span><span class="t">Как открыть меню</span></a></li>
+          <li class="toc-group"><span class="dot paid"></span>Платная версия</li>
+          <li><a href="#items"><span class="n">1</span><span class="t">Предметы и цены киосков</span></a></li>
+          <li><a href="#inventory"><span class="n">2</span><span class="t">Цены в инвентаре и обмене</span></a></li>
+          <li><a href="#telegram"><span class="n">3</span><span class="t">SMS и звонки в Telegram</span></a></li>
+          <li><a href="#ai"><span class="n">4</span><span class="t">AI-анализ чата</span></a></li>
+          <li><a href="#auto"><span class="n">5</span><span class="t">Автоматизация</span></a></li>
+          <li><a href="#queue"><span class="n">6</span><span class="t">Место в очереди</span></a></li>
+          <li class="toc-group"><span class="dot free"></span>Бесплатная версия</li>
+          <li><a href="#stall"><span class="n">1</span><span class="t">Подсказки в окне киоска</span></a></li>
+          <li><a href="#restore"><span class="n">2</span><span class="t">Restore RH</span></a></li>
+          <li><a href="#hotkey"><span class="n">3</span><span class="t">Своя клавиша меню</span></a></li>
+          <li><a href="#tdo"><span class="n">4</span><span class="t">Редактор TDO</span></a></li>
+          <li><a href="#messages"><span class="n">5</span><span class="t">Быстрые сообщения</span></a></li>
+          <li><a href="#menu"><span class="n">6</span><span class="t">Карточка в меню игры</span></a></li>
+          <li><a href="#chat"><span class="n">7</span><span class="t">Скрытые сообщения</span></a></li>
+          <li><a href="#update"><span class="n">8</span><span class="t">Обновления</span></a></li>
+          <li><a href="#buy"><span class="n">₽</span><span class="t">Купить ключ</span></a></li>
+        </ol>
+      </nav>
+
+      <div class="features-main">
+
+        <!-- Витрина: главные функции, листается сама -->
+        <section class="showcase reveal" id="overview" aria-roledescription="карусель" aria-label="Что умеет плагин">
+          <div class="sc-head">
+            <h2>Что умеет плагин</h2>
+            <p>Главное за полминуты — листается само, можно нажать на любую вкладку или смахнуть.</p>
+          </div>
+          <div class="sc-tabs" role="tablist" aria-label="Функции">
+            <button class="sc-tab" type="button" role="tab" aria-selected="true">📦 Цены киосков<span class="sc-bar"></span></button>
+            <button class="sc-tab" type="button" role="tab" aria-selected="false">🏷️ Подсказки в киоске<span class="sc-bar"></span></button>
+            <button class="sc-tab" type="button" role="tab" aria-selected="false">🎒 Инвентарь и обмен<span class="sc-bar"></span></button>
+            <button class="sc-tab" type="button" role="tab" aria-selected="false">📱 Telegram<span class="sc-bar"></span></button>
+            <button class="sc-tab" type="button" role="tab" aria-selected="false">📈 График цены<span class="sc-bar"></span></button>
+            <button class="sc-tab" type="button" role="tab" aria-selected="false">⏱️ Автореклама<span class="sc-bar"></span></button>
+          </div>
+          <div class="sc-stage">
+            <div class="sc-slide on" role="tabpanel" data-href="#items" data-pill="paid"
+                 data-title="Цены всех 24 киосков ТЦ"
+                 data-desc="Ищешь предмет — видишь минимальную цену, рынок и номер киоска, где дешевле. Таблицу пополняют все игроки с плагином.">
+              <img src="img/features/items.webp" width="1600" height="1120" alt="Страница «Предметы»: минимальная цена, рынок и киоск, где дешевле">
+            </div>
+            <div class="sc-slide" role="tabpanel" data-href="#stall" data-pill="free"
+                 data-title="Подсказки прямо в окне киоска"
+                 data-desc="Значок ▼ / ▲ у каждого ценника и список киосков, где этот предмет дешевле. Работает даже без ключа.">
+              <img src="img/features/stall.webp" width="1600" height="1086" loading="lazy" alt="Окно киоска: значки у ценников и подсказка «Дешевле»">
+            </div>
+            <div class="sc-slide" role="tabpanel" data-href="#inventory" data-pill="paid"
+                 data-title="Цены в инвентаре и при обмене"
+                 data-desc="Наведи мышь на предмет — рынок, минимум и где дешевле. Не продешевишь и не переплатишь.">
+              <img src="img/features/trade.webp" width="1600" height="787" loading="lazy" alt="Цены киосков в окне обмена с игроком">
+            </div>
+            <div class="sc-slide tg-slide" role="tabpanel" data-href="#telegram" data-pill="paid" data-tg-static
+                 data-title="SMS и звонки — в Telegram"
+                 data-desc="Пишут или звонят в игре, а ты не за компом — бот пришлёт всё на телефон, ответ уйдёт обратно в игру.">
+            </div>
+            <div class="sc-slide" role="tabpanel" data-href="#items" data-pill="paid"
+                 data-title="График и история цены"
+                 data-desc="Карточка предмета: цена за 30 дней, кто продаёт прямо сейчас и все выставления. Выбросы не сдвигают рынок.">
+              <img src="img/features/items-card.webp" width="1600" height="1120" loading="lazy" alt="Карточка предмета: график цены за 30 дней">
+            </div>
+            <div class="sc-slide" role="tabpanel" data-href="#auto" data-pill="paid"
+                 data-title="Автореклама по расписанию"
+                 data-desc="Сохранённые тексты сами уходят в /s, /fb_msg и /fm с нужным интервалом по очереди, чтобы не словить КД.">
+              <img src="img/features/auto.webp" width="1600" height="1015" loading="lazy" alt="«Автоматизация»: задачи рекламы по расписанию">
+            </div>
+          </div>
+          <div class="sc-info">
+            <div class="sc-txt" aria-live="polite"><b></b><span class="d"></span></div>
+            <a class="sc-more" href="#items">Подробнее →</a>
+          </div>
+        </section>
+
+        <!-- Как открыть меню -->
+        <div class="intro reveal" id="open" data-toc>
+          <h2>Как открыть меню плагина</h2>
+          <div class="open-ways">
+            <div class="open-way"><span class="key"><kbd>INSERT</kbd></span><span>клавиша в игре — можно <a href="#hotkey">сменить</a></span></div>
+            <div class="open-way"><span class="key"><code>/rh</code></span><span>команда в чат</span></div>
+            <div class="open-way"><span class="key"><kbd>M</kbd> → «Персонаж»</span><span>клик по карточке Reseller Helper</span></div>
+          </div>
+          <p class="note">Закрыть меню — <kbd>ESC</kbd> или крестик. Меню открывается и поверх окон игры (киоск, магазин, <kbd>M</kbd>): <kbd>ESC</kbd> закрывает только меню плагина, окно игры остаётся. Без ключа платные пункты меню отмечены замком.</p>
+        </div>
+
+        <!-- ───── Платная версия ───── -->
+        <div class="block-head reveal" id="paid">
+          <h2>Платная версия</h2><span class="pill paid">Платно</span>
+          <p>Работает, пока активен ключ. Все бесплатные функции тоже входят.</p>
+        </div>
+
+        <article class="feat is-paid reveal" id="items" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">📦<span class="feat-num">1</span></div>
+            <div>
+              <div class="feat-title"><h3>Предметы — цены всех киосков сервера</h3><span class="pill paid">Платно</span><span class="pill new">Новое</span></div>
+              <p class="feat-desc">Плагин запоминает витрину каждого открытого киоска, а все игроки с плагином пополняют общую таблицу цен — поэтому видны цены во всех 24 киосках ТЦ, даже в тех, к которым ты не подходил. Ищешь предмет — и сразу видишь минимальную цену, рыночную и в каком киоске дешевле.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li><kbd>INSERT</kbd> → <span class="ui">«Предметы»</span>: поиск, категории и сортировка <span class="ui">«сначала дешевле рынка»</span>.</li>
+                <li>В таблице — сколько лотов и в скольких киосках, минимальная цена, рынок и <span class="ui">«Где дешевле»</span> (номер киоска).</li>
+                <li>Возле минимальной цены — <b style="color:#30a46c">▼ N% к рынку</b>, если дешевле, или <b style="color:#e5484d">▲ +N%</b>, если дороже.</li>
+                <li>В <span class="ui">«Аксессуарах»</span> есть подкатегории: маски, рюкзаки, очки, бронежилеты и другие.</li>
+                <li>Клик по строке — карточка предмета: график цены за 30 дней, где купить сейчас (киоск, продавец, цена) и история выставлений.</li>
+                <li>Предметы, которых сейчас нет в продаже, тоже в списке: рынок и последние цены по истории.</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Что такое «рынок»</h4><span>Медиана цен по продавцам за 14 дней: у каждого продавца один голос — цена его последнего лота. Один завышенный лот или демпер рынок не сдвигают. Если продавцов меньше трёх, окно расширяется до 30 дней и дальше, а цифра помечается «мало данных».</span></div>
+          </div>
+          <figure class="shot"><img src="img/features/items.webp" width="1600" height="1120" loading="lazy" decoding="async" alt="«Предметы»: минимальная цена, рынок и киоск, где дешевле"><img src="img/features/items-acc.webp" width="1600" height="955" loading="lazy" decoding="async" alt="Подкатегории аксессуаров: маски, рюкзаки, очки и другие"><img src="img/features/items-card.webp" width="1600" height="1120" loading="lazy" decoding="async" alt="Карточка предмета: график цены за 30 дней и где купить сейчас"></figure>
+        </article>
+
+        <article class="feat is-paid reveal" id="inventory" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">🎒<span class="feat-num">2</span></div>
+            <div>
+              <div class="feat-title"><h3>Цены в инвентаре и обмене</h3><span class="pill paid">Платно</span><span class="pill new">Новое</span></div>
+              <p class="feat-desc">Наведи на предмет в инвентаре или в окне обмена с игроком — в карточке появится блок «В киосках»: средняя цена, рынок, минимум и три киоска, где дешевле. Сразу понятно, за сколько продавать и не переплачиваешь ли при обмене.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li>Открой инвентарь или обмен и наведи мышь на предмет.</li>
+                <li>Если предмета сейчас нет на витринах, видно рынок, среднюю и минимальную цену по истории и когда его видели в последний раз.</li>
+                <li>У аксессуаров показан номер модели — тот же, что в игре при продаже (ID).</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Включить / выключить</h4><span><kbd>INSERT</kbd> → «Настройки» → «Цены киосков в инвентаре и обмене»</span></div>
+          </div>
+          <figure class="shot"><img src="img/features/inventory.webp" width="980" height="1040" loading="lazy" decoding="async" alt="Блок «В киосках» в карточке предмета инвентаря"><img src="img/features/trade.webp" width="1600" height="787" loading="lazy" decoding="async" alt="Цены киосков в окне обмена с игроком"><img src="img/features/inventory-none.webp" width="980" height="1170" loading="lazy" decoding="async" alt="Предмета нет на витринах — рынок и цены по истории"></figure>
+        </article>
+
+        <article class="feat is-paid reveal" id="telegram" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">📱<span class="feat-num">3</span></div>
+            <div>
+              <div class="feat-title"><h3>SMS и звонки в Telegram</h3><span class="pill paid">Платно</span></div>
+              <p class="feat-desc">Тебе пишут или звонят в игре, а ты не за компом — бот сразу присылает ник, номер и текст SMS. Отвечай прямо из Telegram: ответ уйдёт в игру как SMS, можно торговаться не вставая с дивана.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li>Подключи бота — 4 шага во вкладке <a href="#tg">«Установка» → Telegram</a>.</li>
+                <li>Под уведомлением о SMS нажми <span class="ui">«📝 Ответить»</span> и напиши текст.</li>
+                <li>На входящий звонок — кнопка <span class="ui">«✉️ Написать SMS»</span>.</li>
+                <li>Игра должна быть запущена: ответы отправляются через неё.</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Включить / выключить</h4><span><kbd>INSERT</kbd> → «Telegram» → «Отправлять уведомление на новые смс и звонки»</span></div>
+          </div>
+          <div class="demo tg-demo" data-demo="tg" aria-label="Пример: уведомления в Telegram и ответ в игру"></div>
+        </article>
+
+        <article class="feat is-paid reveal" id="ai" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">🧠<span class="feat-num">4</span></div>
+            <div>
+              <div class="feat-title"><h3>AI-анализ чата</h3><span class="pill paid">Платно</span></div>
+              <p class="feat-desc">Плагин читает чат в реальном времени и помечает объявления: <b style="color:#e5484d">(S)</b> — продают, <b style="color:#3d8ee0">(B)</b> — покупают. Нужные сделки видно сразу, не надо вчитываться в поток сообщений.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li><kbd>INSERT</kbd> → <span class="ui">«AI-анализ»</span> → включи <span class="ui">«Включить AI функционал»</span>.</li>
+                <li>При первом включении скачается модель — в чате появится «Модель загружена. Анализ включён».</li>
+                <li>Покупку и продажу можно включать отдельно: <span class="ui">«Анализ объявлений о покупке / о продаже»</span>.</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Включить / выключить</h4><span><kbd>INSERT</kbd> → «AI-анализ»</span></div>
+          </div>
+          <div class="demo ai-demo" data-demo="ai" aria-label="Пример: чат игры с метками (S) и (B)"></div>
+        </article>
+
+        <article class="feat is-paid reveal" id="auto" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">⏱️<span class="feat-num">5</span></div>
+            <div>
+              <div class="feat-title"><h3>Автоматизация</h3><span class="pill paid">Платно</span></div>
+              <p class="feat-desc">Реклама уходит сама: выбираешь сохранённый текст и интервал — плагин отправляет его в <code>/s</code>, <code>/fb_msg</code> или <code>/fm</code> по расписанию. Несколько задач идут по очереди с паузой, чтобы не словить КД сервера.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li>Сначала сохрани текст на вкладке <span class="ui">/s</span>, <span class="ui">/fb_msg</span> или <span class="ui">/fm</span>.</li>
+                <li><kbd>INSERT</kbd> → <span class="ui">«Автоматизация»</span> → <span class="ui">«Новая задача»</span>: канал, интервал (5–60 минут или свой), текст → <span class="ui">«Запустить»</span>.</li>
+                <li>Пауза и удаление — в строке задачи, <span class="ui">«Запустить все» / «Остановить все»</span> — сверху.</li>
+                <li><span class="ui">«Параметры»</span>: пауза между отправками (1–30 с) и «Слать при свёрнутой игре».</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Важно</h4><span>После перезапуска игры задачи стоят на паузе — нажми «Запустить все».</span></div>
+          </div>
+          <figure class="shot"><img src="img/features/auto.webp" width="1600" height="1015" loading="lazy" decoding="async" alt="«Автоматизация»: задачи рекламы по расписанию"></figure>
+        </article>
+
+        <article class="feat is-paid reveal" id="queue" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">🔔<span class="feat-num">6</span></div>
+            <div>
+              <div class="feat-title"><h3>Место в очереди в Telegram</h3><span class="pill paid">Платно</span></div>
+              <p class="feat-desc">Сервер полный и ты в очереди? Можно отойти от компьютера — бот напишет, когда твоё место станет не дальше заданного.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li>Подключи бота — <a href="#tg">шаги во вкладке «Установка»</a>.</li>
+                <li><kbd>INSERT</kbd> → <span class="ui">«Telegram»</span> → в поле <span class="ui">«Уведомлять при достижении места»</span> укажи номер (по умолчанию 20).</li>
+                <li>Бот пришлёт «📋 Ваше место в очереди: N» — один раз, когда дойдёшь до этого места.</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Включить / выключить</h4><span><kbd>INSERT</kbd> → «Telegram» → «Отправлять уведомление на изменение места в очереди»</span></div>
+          </div>
+          <div class="demo q-demo" data-demo="queue" aria-label="Пример: уведомление о месте в очереди"></div>
+        </article>
+
+        <!-- ───── Бесплатная версия ───── -->
+        <div class="block-head reveal" id="free">
+          <h2>Бесплатная версия</h2><span class="pill free">Бесплатно</span>
+          <p>Работает сразу после установки, без ключа.</p>
+        </div>
+
+        <article class="feat is-free reveal" id="stall" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">🏷️<span class="feat-num">1</span></div>
+            <div>
+              <div class="feat-title"><h3>Подсказки цен в окне киоска</h3><span class="pill free">Бесплатно</span><span class="pill new">Новое</span></div>
+              <p class="feat-desc">Открываешь киоск в ТЦ — возле каждого ценника значок: <b style="color:#30a46c">▼ N%</b> — дешевле рынка, <b style="color:#e5484d">▲ N%</b> — дороже. Наведи на лот — всплывёт подсказка: рыночная цена и до пяти киосков, где этот предмет дешевле. Цены берутся из общей таблицы всех игроков с плагином.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li>GPS → «Торговый центр», подойди к киоску и нажми <kbd>ALT</kbd>.</li>
+                <li>Наведи мышь на лот — в подсказке рынок, сколько продавцов его составляют, и список «Дешевле» с номерами киосков.</li>
+                <li>Если дешевле нигде нет — будет «✓ Дешевле нигде нет» и ближайшие цены дороже.</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Включить / выключить</h4><span><kbd>INSERT</kbd> → «Настройки» → «Сравнение цен в киосках»</span></div>
+          </div>
+          <figure class="shot"><img src="img/features/stall.webp" width="1600" height="1086" loading="lazy" decoding="async" alt="Окно киоска: значки у ценников и подсказка «Дешевле»"></figure>
+        </article>
+
+        <article class="feat is-free reveal" id="restore" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">🔄<span class="feat-num">2</span></div>
+            <div>
+              <div class="feat-title"><h3>Restore RH — вернуть плагин после очистки</h3><span class="pill free">Бесплатно</span><span class="pill new">Новое</span></div>
+              <p class="feat-desc">После обновления игры или «очистки файлов» лаунчер удаляет плагин из папки игры. Утилита Restore RH возвращает последнюю версию в один клик — без поиска файла в Telegram и на Google Drive.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li>Плагин сам кладёт утилиту в <span class="ui">Документы → RADMIR CRMP User Files</span> → <code>RH-updater.exe</code> (с версии 0.5.1).</li>
+                <li>Плагин пропал — запусти <code>RH-updater.exe</code> и нажми <span class="ui">«↻ Восстановить RH»</span>.</li>
+                <li>Если Windows спросит права администратора — разреши: они нужны только для копирования в папку игры. Потом откроется лаунчер.</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Подробнее</h4><span><a href="#faq-restore">«Плагин пропал после обновления игры»</a> во вкладке «Установка»</span></div>
+          </div>
+          <figure class="shot"><img src="img/features/restore.webp" width="1600" height="907" loading="lazy" decoding="async" alt="Restore RH: вернуть плагин в один клик"></figure>
+        </article>
+
+        <article class="feat is-free reveal" id="hotkey" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">⚙️<span class="feat-num">3</span></div>
+            <div>
+              <div class="feat-title"><h3>Своя клавиша меню</h3><span class="pill free">Бесплатно</span><span class="pill new">Новое</span></div>
+              <p class="feat-desc">Если <kbd>INSERT</kbd> неудобен или его нет на клавиатуре — назначь другую клавишу для открытия меню плагина.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li><kbd>INSERT</kbd> → <span class="ui">«Настройки»</span> → карточка <span class="ui">«Управление»</span> → кнопка у строки <span class="ui">«Клавиша открытия меню»</span>.</li>
+                <li>Нажми нужную клавишу: подойдут <kbd>F1</kbd>–<kbd>F12</kbd>, <kbd>Insert</kbd>, <kbd>Delete</kbd>, <kbd>Home</kbd>, <kbd>End</kbd>, <kbd>Page Up</kbd>, <kbd>Page Down</kbd>, <kbd>Pause</kbd>, <kbd>Scroll Lock</kbd>. <kbd>ESC</kbd> — отмена.</li>
+                <li>Вернуть как было — кнопка <span class="ui">«↺ Вернуть INSERT»</span>.</li>
+              </ul>
+            </div>
+          </div>
+          <figure class="shot"><img src="img/features/hotkey.webp" width="1600" height="363" loading="lazy" decoding="async" alt="Настройки: клавиша открытия меню"></figure>
+        </article>
+
+        <article class="feat is-free reveal" id="tdo" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">📢<span class="feat-num">4</span></div>
+            <div>
+              <div class="feat-title"><h3>Редактор TDO</h3><span class="pill free">Бесплатно</span></div>
+              <p class="feat-desc">Объявления <code>/tdo</code> без ручного набора команды: цвет, приватность и длительность выставляешь мышкой и сразу видишь, как это будет выглядеть.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li><kbd>INSERT</kbd> → <span class="ui">«TDO»</span>: выбери «Личный» или «Для всех», длительность (до 3600 сек) и цвет — из палитры или HEX.</li>
+                <li>Проверь <span class="ui">«Предпросмотр»</span> и жми <span class="ui">«Разместить»</span>.</li>
+                <li><span class="ui">«Сохранить TDO»</span> — шаблон попадёт в список; клик по нему вернёт текст и все настройки.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="feat is-free reveal" id="messages" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">💬<span class="feat-num">5</span></div>
+            <div>
+              <div class="feat-title"><h3>Быстрые сообщения</h3><span class="pill free">Бесплатно</span></div>
+              <p class="feat-desc">Тексты для <code>/s</code>, <code>/fb_msg</code>, <code>/fm</code> и <code>/ad</code> сохраняешь один раз — дальше отправка в один клик. <code>/s</code> — крик в чат, <code>/fb_msg</code> — чат футбольной команды, <code>/fm</code> — чат банды, <code>/ad</code> — объявление.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li><kbd>INSERT</kbd> → вкладка нужной команды, впиши текст (до 255 символов).</li>
+                <li><span class="ui">«Сохранить»</span> — текст попадёт в «Сохранённые»; клик по строке подставит его в поле.</li>
+                <li><span class="ui">«Отправить»</span> — сообщение уйдёт в игру, <span class="ui">«Копировать команду»</span> — в буфер обмена.</li>
+              </ul>
+            </div>
+          </div>
+          <figure class="shot"><img src="img/features/messages.webp" width="1600" height="1169" loading="lazy" decoding="async" alt="Вкладка /fm: текст, отправка и сохранённые сообщения"></figure>
+        </article>
+
+        <article class="feat is-free reveal" id="menu" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">🪪<span class="feat-num">6</span></div>
+            <div>
+              <div class="feat-title"><h3>Карточка в меню игры</h3><span class="pill free">Бесплатно</span></div>
+              <p class="feat-desc">В <kbd>M</kbd> → «Персонаж» появляется карточка Reseller Helper: статус подписки, тариф и сколько дней осталось. Ключ можно активировать прямо отсюда.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li>Клик по карточке открывает меню плагина.</li>
+                <li><span class="ui">«Активировать»</span> — окно ввода ключа: <span class="ui">«Вставить»</span> → <span class="ui">«Активировать»</span>. <kbd>ESC</kbd> закрывает только это окно.</li>
+                <li>Кнопка «Документы» остаётся рядом, клавиша <kbd>G</kbd> работает как раньше.</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Показать / убрать</h4><span><kbd>INSERT</kbd> → «Настройки» → «Информация о плагине в главном меню»</span></div>
+          </div>
+          <figure class="shot"><img src="img/features/menu.webp" width="1008" height="728" loading="lazy" decoding="async" alt="Карточка Reseller Helper во вкладке «Персонаж»"></figure>
+        </article>
+
+        <article class="feat is-free reveal" id="chat" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">👁️<span class="feat-num">7</span></div>
+            <div>
+              <div class="feat-title"><h3>Скрытые сообщения в чате</h3><span class="pill free">Бесплатно</span></div>
+              <p class="feat-desc">Игра прячет часть сообщений за плашками «СКРЫТО» и «УДАЛЕНО» — плагин показывает их целиком, включая облака над головой. Сообщения, которые удалил сервер, не возвращаются.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li>Ничего делать не нужно — работает сразу после установки.</li>
+              </ul>
+            </div>
+            <div class="where"><h4>Включить / выключить</h4><span><kbd>INSERT</kbd> → «Настройки» → «Показывать скрытые сообщения в чате»</span></div>
+          </div>
+        </article>
+
+        <article class="feat is-free reveal" id="update" data-toc>
+          <div class="feat-top">
+            <div class="feat-icon" aria-hidden="true">⬇️<span class="feat-num">8</span></div>
+            <div>
+              <div class="feat-title"><h3>Обновления в один клик</h3><span class="pill free">Бесплатно</span></div>
+              <p class="feat-desc">Новая версия ставится без поиска файлов: плагин сам сообщит о ней в чате и скачает по кнопке.</p>
+            </div>
+          </div>
+          <div class="feat-body">
+            <div class="howto">
+              <h4>Как пользоваться</h4>
+              <ul>
+                <li>В чате появится «Доступно обновление: v…».</li>
+                <li><kbd>INSERT</kbd> → кнопка <span class="ui">«Обновить до v…»</span> внизу меню или команда <code>/rh_update</code>.</li>
+                <li>После «Обновление загружено!» перезапусти игру.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- Призыв -->
+        <div class="cta reveal" id="buy" data-toc>
+          <h2>Открой все функции</h2>
+          <p>Предметы и цены всех киосков, цены в инвентаре, Telegram, AI-анализ и автоматизация работают с активным ключом. Попробовать бесплатно 3 дня — пробный ключ в боте <a href="https://t.me/reseller_helper_radmir_bot" target="_blank" rel="noopener">@reseller_helper_radmir_bot</a>.</p>
+          <p>Ключ и продление — на <b>FunPay</b>.</p>
+          <p>Когда срок закончится, новый ключ вводится так же: <b>M → «Персонаж» → «Активировать»</b> или <b>INSERT → «Ввести ключ»</b>.</p>
+          <div class="cta-actions">
+            <a class="btn btn-neon" id="buy-link" href="#" target="_blank" rel="noopener" hidden>Купить или продлить ключ →</a>
+            <a class="btn btn-ghost" href="#setup">Как установить и активировать</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div>
+
+<a class="fab-dl dl-link" id="fab-dl" href="https://github.com/sds-dev-net/reseller-helper-radmir/releases/latest/download/reseller-helper.zip" tabindex="-1" aria-hidden="true">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+  <span>Скачать<span class="dl-ver"></span></span>
+</a>
+<button class="to-top" id="to-top" type="button" aria-label="Наверх">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+(function () {
+  // Ссылка на лот FunPay для кнопки «Купить или продлить ключ». Пусто — кнопка скрыта.
+  var BUY_URL = '';
+
+  var root = document.documentElement;
+  root.classList.add('js');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (BUY_URL) { var b = document.getElementById('buy-link'); b.href = BUY_URL; b.hidden = false; }
+
+  // ── Кнопка «Скачать»: берём .zip из последнего релиза этого репозитория ──
+  // Без ответа API кнопки ведут на releases/latest/download/reseller-helper.zip — GitHub сам отдаёт файл из последнего релиза.
+  (function () {
+    var REPO = 'sds-dev-net/reseller-helper-radmir', KEY = 'rh-latest-release-2';
+    var btn = document.getElementById('dl-btn');
+    var links = document.querySelectorAll('.dl-btn, .dl-link');
+
+    // Плавающая кнопка: видна, когда шапка с кнопкой «Скачать» ушла за экран
+    var fab = document.getElementById('fab-dl');
+    function fabShow(on) {
+      fab.classList.toggle('show', on);
+      fab.tabIndex = on ? 0 : -1;
+      if (on) fab.removeAttribute('aria-hidden'); else fab.setAttribute('aria-hidden', 'true');
+    }
+    if ('IntersectionObserver' in window)
+      new IntersectionObserver(function (en) { fabShow(!en[0].isIntersecting); }).observe(document.querySelector('.hdr-dl'));
+
+    function apply(r) {
+      if (!r || !r.url) return;
+      links.forEach(function (a) { a.href = r.url; });
+      document.querySelectorAll('.dl-ver').forEach(function (s) { s.textContent = r.tag ? ' ' + r.tag : ''; });
+      document.getElementById('dl-title').textContent = 'Скачать Reseller Helper ' + r.tag;
+      document.getElementById('dl-meta').textContent = 'Архив .zip' + (r.size ? ' · ' + (r.size / 1048576).toFixed(1).replace('.', ',') + ' МБ' : '') + (r.date ? ' · от ' + r.date : '');
+      // Отчёт VirusTotal — из описания релиза (строка вида «VirusTotal: 2/72 https://www.virustotal.com/gui/file/…»)
+      if (r.vt) {
+        var score = r.vtScore ? ' · ' + r.vtScore : '';
+        document.querySelectorAll('.vt-link').forEach(function (a) {
+          a.href = r.vt; a.hidden = false;
+          a.querySelector('.vt-txt').textContent = 'Проверка ' + (r.tag || 'файла') + ' на VirusTotal' + score;
+        });
+        document.querySelectorAll('.vt-faq').forEach(function (p) {
+          var a = p.querySelector('a'); a.href = r.vt;
+          a.textContent = 'отчёт VirusTotal для ' + (r.tag || 'последней версии') + (r.vtScore ? ' (' + r.vtScore + ')' : '');
+          p.hidden = false;
+        });
+      }
+    }
+    function findVT(body) {
+      var lines = String(body || '').split(/\r?\n/);
+      for (var i = 0; i < lines.length; i++) {
+        var m = lines[i].match(/https?:\/\/(?:www\.)?virustotal\.com\/gui\/file\/[0-9a-f]{64}[^\s)\]>]*/i);
+        if (!m) continue;
+        var s = lines[i].replace(m[0], '').match(/(\d{1,3})\s*\/\s*(\d{2,3})/);
+        return { url: m[0], score: s ? s[1] + '/' + s[2] : '' };
+      }
+      return null;
+    }
+    var cached = null;
+    try { cached = JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (e) {}
+    if (cached && Date.now() - cached.t < 10 * 60 * 1000) { apply(cached); return; }
+    if (!window.fetch) return;
+    fetch('https://api.github.com/repos/' + REPO + '/releases/latest', { headers: { Accept: 'application/vnd.github+json' } })
+      .then(function (res) { if (!res.ok) throw 0; return res.json(); })
+      .then(function (rel) {
+        var assets = rel.assets || [];
+        var a = assets.filter(function (x) { return /reseller-helper.*\.zip$/i.test(x.name); })[0] ||
+                assets.filter(function (x) { return /\.zip$/i.test(x.name); })[0];
+        if (!a) return;
+        var d = rel.published_at ? new Date(rel.published_at) : null;
+        var r = { url: a.browser_download_url, tag: rel.tag_name || '', size: a.size,
+                  date: d ? d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' }) : '', t: Date.now() };
+        var vt = findVT(rel.body);
+        if (vt) { r.vt = vt.url; r.vtScore = vt.score; }
+        apply(r);
+        try { sessionStorage.setItem(KEY, JSON.stringify(r)); } catch (e) {}
+      })
+      .catch(function () {});
+  })();
+
+  // ── Вкладки и адрес ──
+  var tabsEl = document.querySelector('.tabs');
+  var panels = { install: document.getElementById('panel-install'), features: document.getElementById('panel-features') };
+  var tabs = { install: document.getElementById('tab-install'), features: document.getElementById('tab-features') };
+  var current = null;
+
+  function tabOf(id) {
+    if (id === 'install' || id === 'features') return id;
+    var el = document.getElementById(id);
+    if (!el) return null;
+    if (panels.features.contains(el)) return 'features';
+    if (panels.install.contains(el)) return 'install';
+    return null;
+  }
+
+  function showTab(name) {
+    if (current === name) return false;
+    var first = current === null;
+    current = name;
+    Object.keys(panels).forEach(function (k) {
+      var on = k === name;
+      panels[k].hidden = !on;
+      tabs[k].setAttribute('aria-selected', on ? 'true' : 'false');
+      tabs[k].tabIndex = on ? 0 : -1;
+    });
+    var thumb = tabsEl.querySelector('.tab-thumb');
+    if (first) thumb.style.transition = 'none';   // при загрузке — без анимации
+    tabsEl.setAttribute('data-active', name);
+    if (first) { void thumb.offsetWidth; thumb.style.transition = ''; }
+    if (!first) {
+      var p = panels[name];
+      p.classList.remove('enter'); void p.offsetWidth; p.classList.add('enter');
+    }
+    if (name === 'features') requestAnimationFrame(function () { moveIndicator(true); });
+    return true;
+  }
+
+  // Пункт ещё может быть сдвинут анимацией появления — показываем его сразу, чтобы прокрутка встала точно
+  function settle(el) {
+    var r = el.classList.contains('reveal') ? el : el.closest('.reveal');
+    if (r) { r.classList.add('in', 'settled'); revealIO.unobserve(r); }
+  }
+  function scrollToEl(el, instant) {
+    settle(el);
+    // offsetTop не учитывает transform (анимации появления и смены вкладки), поэтому позиция точная
+    var y = 0, n = el;
+    while (n) { y += n.offsetTop; n = n.offsetParent; }
+    y -= parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
+    window.scrollTo({ top: Math.max(0, y), behavior: (instant || reduce.matches) ? 'instant' : 'smooth' });
+  }
+
+  // Открыть цель из адреса или ссылки: вкладка (#install/#features) или пункт внутри неё
+  function go(id, fromLoad) {
+    var tab = tabOf(id) || 'install';
+    var changed = showTab(tab);
+    if (id === tab || !document.getElementById(id) || id === '') {
+      if (changed && !fromLoad) window.scrollTo({ top: 0, behavior: 'instant' });
+      return;
+    }
+    var el = document.getElementById(id);
+    if (el.tagName === 'DETAILS') el.open = true;
+    // ждём кадр, чтобы панель успела отрисоваться
+    requestAnimationFrame(function () {
+      scrollToEl(el, fromLoad || changed);
+      if (fromLoad || changed) setActive(id, true);
+      // браузер сам прокручивает к #якорю при загрузке — поправляем после него
+      if (fromLoad && document.readyState !== 'complete')
+        window.addEventListener('load', function () { setTimeout(function () { scrollToEl(el, true); }, 0); }, { once: true });
+    });
+  }
+
+  function hashId() { return decodeURIComponent(location.hash.slice(1)); }
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    var id = a.getAttribute('href').slice(1);
+    if (id && !tabOf(id)) return;
+    e.preventDefault();
+    var tab = tabOf(id) || 'install';
+    // В адресе — вкладка; для ссылок на пункт другой вкладки — сам пункт (чтобы им можно было поделиться)
+    var target = (a.closest('.toc') || id === tab) ? tab : id;
+    if (('#' + target) !== location.hash) history.pushState(null, '', '#' + target);
+    go(id, false);
+    if (a.closest('.toc') && id !== tab) { setActive(id, true); }
+  });
+
+  window.addEventListener('popstate', function () { go(hashId(), false); });
+  window.addEventListener('hashchange', function () { go(hashId(), false); });
+
+  // Стрелки на вкладках (доступность)
+  tabsEl.addEventListener('keydown', function (e) {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    var next = current === 'install' ? 'features' : 'install';
+    history.pushState(null, '', '#' + next);
+    go(next, false);
+    tabs[next].focus();
+  });
+
+  // ── Оглавление: подсветка текущего пункта ──
+  var toc = document.querySelector('.toc');
+  var tocList = document.getElementById('toc-list');
+  var ind = document.getElementById('toc-ind');
+  var links = {};
+  tocList.querySelectorAll('a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+  var sections = Array.prototype.slice.call(document.querySelectorAll('[data-toc]'));
+  var activeId = sections[0].id;
+  var lockUntil = 0;
+
+  function moveIndicator(instant) {
+    var a = links[activeId];
+    if (!a || panels.features.hidden) return;
+    if (instant) ind.style.transition = 'none';
+    ind.style.width = a.offsetWidth + 'px';
+    ind.style.height = a.offsetHeight + 'px';
+    ind.style.transform = 'translate(' + a.offsetLeft + 'px,' + a.offsetTop + 'px)';
+    ind.style.opacity = '1';
+    if (instant) { void ind.offsetWidth; ind.style.transition = ''; }
+    // держим активный пункт в видимой части оглавления
+    var horizontal = toc.scrollWidth > toc.clientWidth + 2;
+    if (horizontal) {
+      var left = a.offsetLeft - (toc.clientWidth - a.offsetWidth) / 2;
+      toc.scrollTo({ left: Math.max(0, left), behavior: (instant || reduce.matches) ? 'auto' : 'smooth' });
+    } else if (toc.scrollHeight > toc.clientHeight + 2) {
+      var top = a.offsetTop - toc.clientHeight / 2;
+      toc.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
+    }
+  }
+
+  function setActive(id, lock) {
+    if (lock) lockUntil = Date.now() + 900;   // пока идёт плавная прокрутка, не перескакиваем
+    if (!links[id] || id === activeId) { moveIndicator(); return; }
+    if (links[activeId]) links[activeId].classList.remove('active');
+    activeId = id;
+    links[id].classList.add('active');
+    links[id].setAttribute('aria-current', 'true');
+    Object.keys(links).forEach(function (k) { if (k !== id) links[k].removeAttribute('aria-current'); });
+    moveIndicator();
+  }
+  links[activeId].classList.add('active');
+
+  var visible = {};
+  var spy = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) { visible[en.target.id] = en.isIntersecting; });
+    if (Date.now() < lockUntil) return;
+    // у самого низа страницы — последний пункт
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) { setActive(sections[sections.length - 1].id); return; }
+    for (var i = 0; i < sections.length; i++) {
+      if (visible[sections[i].id]) { setActive(sections[i].id); return; }
+    }
+  }, { rootMargin: '-90px 0px -55% 0px', threshold: 0 });
+  sections.forEach(function (s) { spy.observe(s); });
+
+  window.addEventListener('scroll', function () {
+    if (Date.now() < lockUntil || panels.features.hidden) return;
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) setActive(sections[sections.length - 1].id);
+  }, { passive: true });
+  window.addEventListener('resize', function () { moveIndicator(true); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { moveIndicator(true); });
+
+  // ── Появление при прокрутке (по очереди) ──
+  var revealIO = new IntersectionObserver(function (entries) {
+    var batch = entries.filter(function (en) { return en.isIntersecting; });
+    batch.forEach(function (en, i) {
+      var el = en.target;
+      el.style.setProperty('--d', (reduce.matches ? 0 : Math.min(i, 5) * 80) + 'ms');
+      el.classList.add('in');
+      revealIO.unobserve(el);
+      setTimeout(function () { el.classList.add('settled'); el.style.removeProperty('--d'); }, 700 + i * 80);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(function (el) { revealIO.observe(el); });
+
+  // ── Кнопка «наверх» ──
+  var topBtn = document.getElementById('to-top');
+  function onScroll() { topBtn.classList.toggle('show', window.scrollY > 600); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: reduce.matches ? 'auto' : 'smooth' });
+  });
+
+  // ═════════════ Картинки, витрина и живые примеры ═════════════
+  var ZOOM_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
+  function h(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+  function onSwipe(el, cb) {
+    var x0 = null, y0 = 0;
+    el.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+    el.addEventListener('touchend', function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+      x0 = null;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) cb(dx < 0 ? 1 : -1);
+    }, { passive: true });
+  }
+
+  // ── Просмотр на весь экран ──
+  var lb = h('div', 'lb');
+  lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', 'Просмотр скриншота');
+  lb.innerHTML =
+    '<button class="lb-btn lb-close" type="button" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
+    '<button class="lb-btn lb-prev" type="button" aria-label="Предыдущий"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>' +
+    '<button class="lb-btn lb-next" type="button" aria-label="Следующий"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>' +
+    '<img class="lb-img" alt=""><div class="lb-cap"></div>';
+  document.body.appendChild(lb);
+  var lbImg = lb.querySelector('.lb-img'), lbCap = lb.querySelector('.lb-cap');
+  var lbList = [], lbIdx = 0, lbBack = null, lbOnChange = null;
+  function lbShow(i) {
+    lbIdx = (i + lbList.length) % lbList.length;
+    var it = lbList[lbIdx];
+    lbImg.src = it.src; lbImg.alt = it.alt;
+    lbCap.innerHTML = (lbList.length > 1 ? '<span class="cnt">' + (lbIdx + 1) + ' / ' + lbList.length + '</span>' : '') + it.alt;
+    if (lbOnChange) lbOnChange(lbIdx);
+  }
+  function lbOpen(list, i, onChange) {
+    lbList = list; lbOnChange = onChange || null; lbBack = document.activeElement;
+    lb.classList.toggle('single', list.length < 2);
+    lbShow(i);
+    lb.classList.add('open');
+    root.style.overflow = 'hidden';
+    lb.querySelector('.lb-close').focus({ preventScroll: true });
+  }
+  function lbClose() {
+    lb.classList.remove('open'); root.style.overflow = '';
+    if (lbBack && lbBack.focus) lbBack.focus({ preventScroll: true });
+  }
+  lb.querySelector('.lb-close').addEventListener('click', lbClose);
+  lb.querySelector('.lb-prev').addEventListener('click', function () { lbShow(lbIdx - 1); });
+  lb.querySelector('.lb-next').addEventListener('click', function () { lbShow(lbIdx + 1); });
+  lb.addEventListener('click', function (e) { if (e.target === lb) lbClose(); });
+  onSwipe(lb, function (d) { if (lbList.length > 1) lbShow(lbIdx + d); });
+  document.addEventListener('keydown', function (e) {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') { e.preventDefault(); lbClose(); }
+    else if (e.key === 'ArrowLeft' && lbList.length > 1) lbShow(lbIdx - 1);
+    else if (e.key === 'ArrowRight' && lbList.length > 1) lbShow(lbIdx + 1);
+    else if (e.key === 'Tab') {   // фокус не уходит из окна
+      var f = Array.prototype.filter.call(lb.querySelectorAll('button'), function (b) { return b.offsetParent; });
+      var k = f.indexOf(document.activeElement);
+      e.preventDefault(); f[(k + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus();
+    }
+  });
+
+  // Горизонтальные ленты (вкладки витрины, миниатюры) листаются колесом мыши
+  function wheelX(el) {
+    el.addEventListener('wheel', function (e) {
+      var max = el.scrollWidth - el.clientWidth;
+      if (max <= 2 || e.ctrlKey) return;
+      var d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      if (!d) return;
+      if ((d < 0 && el.scrollLeft <= 0) || (d > 0 && el.scrollLeft >= max - 1)) return;   // у края — крутим страницу
+      e.preventDefault();
+      el.scrollLeft += d * (e.deltaMode === 1 ? 32 : e.deltaMode === 2 ? el.clientWidth : 1);
+    }, { passive: false });
+  }
+
+  // ── Скриншоты в карточках: одна картинка или галерея ──
+  document.querySelectorAll('figure.shot').forEach(function (fig) {
+    var imgs = Array.prototype.slice.call(fig.querySelectorAll('img'));
+    var list = imgs.map(function (im) { return { src: im.getAttribute('src'), alt: im.alt }; });
+    var multi = imgs.length > 1, cur = 0;
+    var stage = h('button', 'shot-stage');
+    stage.type = 'button';
+    stage.setAttribute('aria-label', 'Открыть скриншот на весь экран');
+    imgs.forEach(function (im) { stage.appendChild(im); });
+    stage.insertAdjacentHTML('beforeend', '<span class="shot-zoom" aria-hidden="true">' + ZOOM_SVG + '</span>');
+    fig.appendChild(stage);
+    var cap = h('figcaption', 'shot-cap');
+    fig.appendChild(cap);
+    var thumbs = [];
+    if (multi) {
+      fig.classList.add('multi');
+      var row = h('div', 'shot-thumbs');
+      list.forEach(function (it, i) {
+        var b = h('button', 'shot-thumb', '<img src="' + it.src + '" alt="" loading="lazy" decoding="async">');
+        b.type = 'button'; b.setAttribute('aria-label', it.alt);
+        b.addEventListener('click', function () { set(i); });
+        row.appendChild(b); thumbs.push(b);
+      });
+      fig.appendChild(row);
+      wheelX(row);
+      onSwipe(stage, function (d) { set(cur + d); });
+    }
+    function set(i) {
+      cur = (i + imgs.length) % imgs.length;
+      imgs.forEach(function (im, k) { im.classList.toggle('on', k === cur); });
+      thumbs.forEach(function (b, k) { b.setAttribute('aria-current', k === cur ? 'true' : 'false'); });
+      cap.innerHTML = (multi ? '<span class="cnt">' + (cur + 1) + ' / ' + imgs.length + '</span>' : '') + '<span>' + list[cur].alt + '</span>';
+    }
+    set(0);
+    stage.addEventListener('click', function () { lbOpen(list, cur, multi ? set : null); });
+  });
+
+  // ── Telegram: окно чата ──
+  var SEND_SVG = '<svg class="tg-send" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.4 20.4l17.45-7.48a1 1 0 000-1.84L3.4 3.6a.99.99 0 00-1.39.91L2 9.12c0 .5.37.93.87.99L17 12 2.87 13.88c-.5.07-.87.5-.87 1l.01 4.61c0 .71.73 1.2 1.39.91z"/></svg>';
+  function tgWindow(sub) {
+    var w = h('div', 'tgw');
+    w.innerHTML = '<div class="tg-head"><div class="tg-ava" aria-hidden="true">RH</div><div><div class="tg-name">Reseller Helper</div><div class="tg-sub">' + (sub || 'бот') + '</div></div></div>' +
+      '<div class="tg-msgs"></div><div class="tg-in"><span class="txt">Сообщение</span>' + SEND_SVG + '</div>';
+    return { root: w, msgs: w.querySelector('.tg-msgs'), txt: w.querySelector('.tg-in .txt'), send: w.querySelector('.tg-send') };
+  }
+  function tgMsg(box, html, tm, opt) {
+    opt = opt || {};
+    var m = h('div', 'tgm' + (opt.out ? ' out' : '') + (opt.glow ? ' glow' : ''), html + '<span class="tm">' + tm + '</span>');
+    if (opt.kb) m.appendChild(h('div', 'tgkb', '<span>' + opt.kb + '</span>'));
+    box.appendChild(m);
+    while (box.children.length > 8) box.removeChild(box.firstChild);
+    return m;
+  }
+  function c(x) { return '<code>' + x + '</code>'; }
+  var TG = {
+    sms: function (n, num, tx) { return '📱 <b>Новое SMS</b><br>👤 Ник: ' + c(n) + '<br>📞 Номер: ' + c(num) + '<br>💬 Текст: ' + tx; },
+    ask: function (n, num) { return '✏️ Введите текст SMS для <b>' + n + '</b> (номер ' + c(num) + '):'; },
+    ok: '✅ Ответ поставлен в очередь!',
+    call: function (n, num) { return '📞 <b>Новый звонок</b><br>👤 Ник: ' + c(n) + '<br>📱 Номер: ' + c(num); }
+  };
+  var SMS_IN = 'Привет! Бугатти 47кк фастом купишь?', SMS_OUT = 'Го 45? фастом же';
+
+  // статичный кадр для витрины
+  document.querySelectorAll('[data-tg-static]').forEach(function (slot) {
+    var t = tgWindow();
+    tgMsg(t.msgs, TG.sms('Artem_Belov', '100388', SMS_IN), '18:42', { kb: '📝 Ответить' });
+    tgMsg(t.msgs, TG.ask('Artem_Belov', '100388'), '18:42');
+    tgMsg(t.msgs, SMS_OUT, '18:43', { out: true });
+    tgMsg(t.msgs, TG.ok, '18:43');
+    tgMsg(t.msgs, TG.call('Sergey_Orlov', '100245'), '18:47', { kb: '✉️ Написать SMS' });
+    slot.appendChild(t.root);
+  });
+
+  // ── Движок примеров: запускаются, когда видны, и крутятся по кругу ──
+  function Demo(el, build) {
+    var self = this, timers = [];
+    this.el = el;
+    this.at = function (ms, fn) { timers.push(setTimeout(fn, ms)); };
+    this.stop = function () { timers.forEach(clearTimeout); timers = []; };
+    this.restart = function () { self.stop(); self.reset(); if (reduce.matches || !self.on) self.final(); else self.play(); };
+    build(this);
+    var bar = h('div', 'demo-bar', '<span class="demo-live">' + (this.label || 'Живой пример') + '</span>');
+    var ctl = h('div', 'demo-ctl');
+    (this.controls || []).forEach(function (b) { ctl.appendChild(b); });
+    if (this.replay !== false) {
+      var rb = h('button', 'demo-btn', '↻ Ещё раз'); rb.type = 'button';
+      rb.addEventListener('click', function () { self.restart(); });
+      ctl.appendChild(rb);
+    }
+    bar.appendChild(ctl);
+    el.insertBefore(bar, el.firstChild);
+    if (this.note) el.appendChild(h('div', 'demo-note', this.note));
+    this.reset(); this.final();
+    var io = new IntersectionObserver(function (en) {
+      var vis = en[0].isIntersecting;
+      if (vis && !self.on) { self.on = true; self.restart(); }
+      else if (!vis && self.on) { self.on = false; self.stop(); }
+    }, { threshold: 0.35 });
+    io.observe(el);
+  }
+
+  // SMS и звонки в Telegram
+  document.querySelectorAll('[data-demo="tg"]').forEach(function (el) {
+    new Demo(el, function (d) {
+      d.note = 'Пример переписки. Ники и номера вымышленные.';
+      var grid = h('div', 'demo-grid');
+      var game = h('div', 'game', '<span class="game-lbl">В игре</span><div class="game-chat"></div>');
+      var chat = game.querySelector('.game-chat');
+      var t = tgWindow();
+      grid.appendChild(game); grid.appendChild(t.root); el.appendChild(grid);
+      function gl(color, text) { var l = h('div', 'gl'); l.style.color = color; l.textContent = text; chat.appendChild(l); while (chat.children.length > 8) chat.removeChild(chat.firstChild); }
+      var Y = '#ffd24a', B = '#7aa0ff';
+      d.reset = function () { chat.innerHTML = ''; t.msgs.innerHTML = ''; t.txt.textContent = 'Сообщение'; t.txt.classList.remove('typing'); t.send.classList.remove('on'); };
+      d.final = function () {
+        gl(Y, 'SMS: ' + SMS_IN + ' | Отправитель: Artem_Belov [т.100388]');
+        gl(Y, 'SMS: ' + SMS_OUT + ' | Получатель: Artem_Belov [т.100388]');
+        gl(B, 'Входящий звонок | Номер: 100245 | Вызывает Sergey_Orlov');
+        tgMsg(t.msgs, TG.sms('Artem_Belov', '100388', SMS_IN), '18:42', { kb: '📝 Ответить' });
+        tgMsg(t.msgs, TG.ask('Artem_Belov', '100388'), '18:42');
+        tgMsg(t.msgs, SMS_OUT, '18:43', { out: true });
+        tgMsg(t.msgs, TG.ok, '18:43');
+        tgMsg(t.msgs, TG.call('Sergey_Orlov', '100245'), '18:47', { kb: '✉️ Написать SMS' });
+      };
+      d.play = function () {
+        var sms;
+        d.at(400, function () { gl(Y, 'SMS: ' + SMS_IN + ' | Отправитель: Artem_Belov [т.100388]'); });
+        d.at(1100, function () { sms = tgMsg(t.msgs, TG.sms('Artem_Belov', '100388', SMS_IN), '18:42', { kb: '📝 Ответить' }); });
+        d.at(2700, function () { sms.querySelector('.tgkb span').classList.add('press'); });
+        d.at(3000, function () { sms.querySelector('.tgkb span').classList.remove('press'); tgMsg(t.msgs, TG.ask('Artem_Belov', '100388'), '18:42'); });
+        var t0 = 3700;
+        SMS_OUT.split('').forEach(function (ch, i) {
+          d.at(t0 + i * 70, function () { t.txt.classList.add('typing'); t.send.classList.add('on'); t.txt.textContent = SMS_OUT.slice(0, i + 1); });
+        });
+        var t1 = t0 + SMS_OUT.length * 70 + 350;
+        d.at(t1, function () { t.txt.classList.remove('typing'); t.txt.textContent = 'Сообщение'; t.send.classList.remove('on'); tgMsg(t.msgs, SMS_OUT, '18:43', { out: true }); });
+        d.at(t1 + 500, function () { tgMsg(t.msgs, TG.ok, '18:43'); });
+        d.at(t1 + 1300, function () { gl(Y, 'SMS: ' + SMS_OUT + ' | Получатель: Artem_Belov [т.100388]'); });
+        d.at(t1 + 3000, function () { gl(B, 'Входящий звонок | Номер: 100245 | Вызывает Sergey_Orlov'); });
+        d.at(t1 + 3600, function () { tgMsg(t.msgs, TG.call('Sergey_Orlov', '100245'), '18:47', { kb: '✉️ Написать SMS' }); });
+        d.at(t1 + 9000, function () { d.restart(); });
+      };
+    });
+  });
+
+  // AI-анализ чата
+  document.querySelectorAll('[data-demo="ai"]').forEach(function (el) {
+    new Demo(el, function (d) {
+      d.label = 'Живой пример';
+      d.replay = false;
+      d.note = 'Включай и выключай метки кнопками сверху — в плагине покупку и продажу тоже можно включать отдельно. Ники вымышленные.';
+      var F = '#4682B4', W = '#ffffff';
+      var LINES = [
+        [F, '[FOOTBALL] Игрок Denis_Volkov[118]: продам бар Лыткарино 110кк, торг', 's'],
+        [W, 'Max_Orlov[45] крикнул: кто на капт, пишите в лс'],
+        [F, '[FOOTBALL] Игрок Artem_Belov[219]: Куплю рюкзак БеарБрик т.999-979', 'b'],
+        [W, 'Kirill_Zaitsev[77] крикнул: продам сумку Бейп 46.5кк, смс 850000', 's'],
+        [F, '[FOOTBALL] Игрок Ilya_Sokolov[12]: всем привет, кто сегодня на сбор?'],
+        [F, '[FOOTBALL] Игрок Roman_Gusev[82]: куплю ярис или ярис крафт 777887', 'b'],
+        [W, 'Egor_Lebedev[310] крикнул: Продам КВ Южка 4кк (( 11-99-44 ))', 's'],
+        [F, '[FOOTBALL] Игрок Pavel_Morozov[96]: Куплю дом в ЛТО, бюджет 35кк', 'b'],
+        [W, 'Nikita_Frolov[54] крикнул: ахаха, ну ты дал'],
+        [F, '[FOOTBALL] Игрок Den_Kovalev[407]: Продам Ферари 812, Портофино 443444', 's']
+      ];
+      var game = h('div', 'game', '<span class="game-lbl">Чат игры</span><div class="game-chat"></div>');
+      var chat = game.querySelector('.game-chat');
+      el.appendChild(game);
+      var on = { s: true, b: true };
+      d.controls = ['s', 'b'].map(function (k) {
+        var b = h('button', 'demo-btn', '<span class="tg-' + k + '">(' + k.toUpperCase() + ')</span><span class="lbl">' + (k === 's' ? 'продают' : 'покупают') + '</span>');
+        b.type = 'button'; b.setAttribute('aria-pressed', 'true');
+        b.addEventListener('click', function () {
+          on[k] = !on[k]; b.setAttribute('aria-pressed', on[k] ? 'true' : 'false');
+          el.classList.toggle('no-' + k, !on[k]);
+        });
+        return b;
+      });
+      var idx = 0;
+      function line(L, animate) {
+        var l = h('div', 'gl'); l.style.color = L[0];
+        var txt = document.createTextNode(L[1]);
+        if (L[2]) {
+          var tag = h('span', 'tag ' + L[2] + ' tg-' + L[2], '(' + L[2].toUpperCase() + ')');
+          if (animate) {
+            var scan = h('span', 'ai-scan', 'AI…'); l.appendChild(scan); l.appendChild(txt);
+            d.at(650, function () { tag.classList.add('pop'); l.replaceChild(tag, scan); });
+          } else { l.appendChild(tag); l.appendChild(txt); }
+        } else l.appendChild(txt);
+        chat.appendChild(l);
+        while (chat.children.length > 12) chat.removeChild(chat.firstChild);
+      }
+      d.reset = function () { chat.innerHTML = ''; idx = 0; };
+      d.final = function () { for (var i = 0; i < 7; i++) line(LINES[i], false); idx = 7; };
+      d.play = function () {
+        d.final();
+        (function next() {
+          d.at(1500, function () { line(LINES[idx % LINES.length], true); idx++; next(); });
+        })();
+      };
+    });
+  });
+
+  // Место в очереди
+  document.querySelectorAll('[data-demo="queue"]').forEach(function (el) {
+    new Demo(el, function (d) {
+      d.note = 'Двигай ползунок — бот напишет, когда дойдёшь до выбранного места. Как в настройке «Уведомлять при достижении места».';
+      var grid = h('div', 'demo-grid');
+      var box = h('div', 'qbox', '<div class="q-lbl">Место в очереди</div><div class="q-num">44</div>' +
+        '<label class="q-set">Уведомить на месте <input type="range" min="5" max="40" value="20" aria-label="Уведомить на месте"><output>20</output></label>');
+      var t = tgWindow();
+      grid.appendChild(box); grid.appendChild(t.root); el.appendChild(grid);
+      var num = box.querySelector('.q-num'), range = box.querySelector('input'), out = box.querySelector('output');
+      var STEPS = [2, 1, 3, 1, 1, 2, 1, 2, 0, 2, 1, 1, 2, 0, 1, 1, 2, 1, 1, 1, 2, 1, 1];
+      function thr() { return +range.value; }
+      range.addEventListener('input', function () { out.textContent = range.value; d.restart(); });
+      d.reset = function () { num.textContent = '44'; num.classList.remove('hit'); t.msgs.innerHTML = ''; };
+      d.final = function () { num.textContent = thr(); num.classList.add('hit'); tgMsg(t.msgs, '📋 <b>Ваше место в очереди: ' + thr() + '</b>', '15:28', { glow: true }); };
+      d.play = function () {
+        var n = 44, sent = false, ms = 300;
+        STEPS.forEach(function (s) {
+          ms += 330;
+          d.at(ms, function () {
+            n = Math.max(1, n - s); num.textContent = n;
+            if (!sent && n <= thr()) { sent = true; num.classList.add('hit'); tgMsg(t.msgs, '📋 <b>Ваше место в очереди: ' + n + '</b>', '15:28', { glow: true }); }
+          });
+        });
+        d.at(ms + 3500, function () { d.restart(); });
+      };
+    });
+  });
+
+  // ── Витрина ──
+  document.querySelectorAll('.showcase').forEach(function (sc) {
+    var tabsSc = Array.prototype.slice.call(sc.querySelectorAll('.sc-tab'));
+    var slides = Array.prototype.slice.call(sc.querySelectorAll('.sc-slide'));
+    var tTitle = sc.querySelector('.sc-txt b'), tDesc = sc.querySelector('.sc-txt .d'), more = sc.querySelector('.sc-more');
+    var cur = 0, inView = false, hover = false;
+    if (reduce.matches) sc.classList.add('static');
+    function upd() { sc.classList.toggle('paused', !inView || hover || lb.classList.contains('open')); }
+    function set(i, user) {
+      cur = (i + slides.length) % slides.length;
+      slides.forEach(function (s, k) { s.classList.toggle('on', k === cur); });
+      tabsSc.forEach(function (b, k) {
+        b.setAttribute('aria-selected', k === cur ? 'true' : 'false');
+        b.tabIndex = k === cur ? 0 : -1;
+        var bar = b.querySelector('.sc-bar'); bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = '';
+      });
+      var s = slides[cur];
+      tTitle.innerHTML = s.dataset.title + ' <span class="pill ' + s.dataset.pill + '">' + (s.dataset.pill === 'free' ? 'Бесплатно' : 'Платно') + '</span>';
+      tDesc.textContent = s.dataset.desc;
+      more.setAttribute('href', s.dataset.href);
+      var tb = tabsSc[cur], row = tb.parentNode;
+      if (row.scrollWidth > row.clientWidth + 2) row.scrollTo({ left: Math.max(0, tb.offsetLeft - (row.clientWidth - tb.offsetWidth) / 2), behavior: reduce.matches ? 'auto' : 'smooth' });
+      if (user && !reduce.matches) { sc.classList.add('static'); }   // нажали сами — больше не листаем
+    }
+    tabsSc.forEach(function (b, k) {
+      b.addEventListener('click', function () { set(k, true); });
+      b.querySelector('.sc-bar').addEventListener('animationend', function () { if (k === cur && !sc.classList.contains('static')) set(cur + 1); });
+      b.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        e.preventDefault(); set(cur + (e.key === 'ArrowRight' ? 1 : -1), true); tabsSc[cur].focus();
+      });
+    });
+    var tabRow = sc.querySelector('.sc-tabs');
+    function edge() { tabRow.classList.toggle('end', tabRow.scrollLeft + tabRow.clientWidth >= tabRow.scrollWidth - 4); }
+    tabRow.addEventListener('scroll', edge, { passive: true }); wheelX(tabRow); window.addEventListener('resize', edge); edge();
+    var stageSc = sc.querySelector('.sc-stage');
+    onSwipe(stageSc, function (dir) { set(cur + dir, true); });
+    stageSc.addEventListener('click', function (e) {
+      if (e.target.tagName !== 'IMG') return;
+      var withImg = slides.filter(function (s) { return s.querySelector('img'); });
+      var list = withImg.map(function (s) { var im = s.querySelector('img'); return { src: im.getAttribute('src'), alt: im.alt }; });
+      lbOpen(list, withImg.indexOf(slides[cur]));
+      upd();
+    });
+    sc.addEventListener('mouseenter', function () { hover = true; upd(); });
+    sc.addEventListener('mouseleave', function () { hover = false; upd(); });
+    new IntersectionObserver(function (en) { inView = en[0].isIntersecting; upd(); }, { threshold: 0.4 }).observe(sc);
+    new MutationObserver(upd).observe(lb, { attributes: true, attributeFilter: ['class'] });
+    set(0);
+    upd();
+  });
+
+  // ── Старт ──
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  go(hashId(), true);
+})();
+</script>
+</body>
+</html>
